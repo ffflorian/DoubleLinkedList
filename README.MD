@@ -29,10 +29,10 @@ Now you could use it like this:
 import LinkedList from './LinkedList';
 
 const linkedList = new LinkedList();
-linkedList.add('zero');
 linkedList.add('one');
 linkedList.add('two');
 linkedList.add('three');
+linkedList.get(0); // 'one'
 ```
 
 You can also run a few tests:

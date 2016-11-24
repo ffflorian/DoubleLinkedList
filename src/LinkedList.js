@@ -1,14 +1,56 @@
 'use strict';
 
+/**
+ * A double-linked list.
+ *
+ * Date: 2016-11-18
+ * @author Florian Keller <github@floriankeller.de>
+ */
+
 import ListElement from './ListElement';
 
 export default class LinkedList {
+
+    /**
+     * The constructor. Sets the head and the tail
+     *  to null since they don't exist yet.
+     * Also sets the size to 0 because the
+     *  list doesn't contain any elements yet.
+     * @constructor
+     */
     constructor () {
+        /**
+         * The current head (first element).
+         *  _______    _______
+         * |*|**|*|   | |  | |
+         * |*|**|*<---> |  | |
+         * |_|__|_|   |_|__|_|
+         *   head       next
+         */
         this.head = null;
+
+        /**
+         * The current tail (last element).
+         *  _______    _______
+         * | |  | |   |*|**|*|
+         * | |  | <--->*|**|*|
+         * |_|__|_|   |_|__|_|
+         *   prev       tail
+         */
         this.tail = null;
+
+        /**
+         * The size of the list.
+         */
         this.size = 0;
     }
 
+    /**
+     * Returns an object at a certain position.
+     * @param {arg} The position to find the element at
+     *              or the value to find in the list.
+     * @return {ListElement} The found object.
+     */
     getFirstObject (arg) {
         if (typeof arg === 'string') {
             const value = arg;
@@ -37,6 +79,17 @@ export default class LinkedList {
         }
     }
 
+    /**
+     * Removes a certain element from the list by
+     *  connecting the elements before and after the
+     *  old element.
+     *  _______    _______    _______
+     * |*|**|*|   | |  | |   |*|**|*|
+     * |*|**|*<-------------->*|**|*|
+     * |_|__|_|   |_|__|_|   |_|__|_|
+     *   prev     current      next
+     * @param {ListElement} currentElement The element to remove.
+     */
     removeObject (currentElement) {
         if (!(currentElement instanceof ListElement)) {
             throw new Error('Invalid next element!');
@@ -47,10 +100,25 @@ export default class LinkedList {
         prevElement.setNext(nextElement);
         nextElement.setPrev(prevElement);
 
+        // Set the old element to null so the garbage collector
+        //  can remove it.
         currentElement = null;
         this.size--;
     }
 
+    /**
+     * Adds an element to the end of the list by inserting
+     *  the new element at the end of the list.
+     *  _______    _______    _______
+     * | |  | |   | |  | |   |*|**|*|
+     * | |  | <---> |  | <--->*|**|*|
+     * |_|__|_|   |_|__|_|   |_|__|_|
+     *    n         tail       new
+     * @param {Object} args The value which the element should contain.
+     * And possibly the index where the element should be inserted.
+     * @throws IllegalArgumentException if the value is null.
+     * @throws NullPointerException if both head and tail are null.
+     */
     add (...args) {
         if (args.length === 0) {
             throw new Error('No arguments given!');
@@ -65,14 +133,23 @@ export default class LinkedList {
             let newElement = new ListElement(value);
 
             if (this.tail == null && this.head == null) {
+                // Set head and tail both to be the new element
+                //  because they don't exist yet and thus
+                //  the new element is both head and tail.
                 this.head = newElement;
                 this.tail = newElement;
             } else if ((this.tail == null && this.head != null) || (this.head == null && this.tail != null)) {
+                // Something went wrong and they are not both null.
                 throw new Error(`We've made a terrible mistake! Head: ${this.head}, tail: ${this.tail}`);
             } else {
+                // nextElement points to the object behind
+                //  which the new element should be added.
                 let nextElement = this.getFirstObject(index);
+                // prevElement points to the position
+                // behind which the new element should be added.
                 let prevElement = nextElement.getPrev();
 
+                // Insert the new element between prev and next.
                 newElement.setPrev(prevElement);
                 newElement.setNext(nextElement);
                 prevElement.setNext(newElement);
@@ -86,11 +163,15 @@ export default class LinkedList {
             let newElement = new ListElement(value);
 
             if (this.tail == null && this.head == null) {
+                // Set head and tail both to be the new element
+                //  because they don't exist yet and thus
+                //  the new element is both head and tail.
                 this.head = newElement;
                 this.tail = newElement;
             } else if ((this.tail == null && this.head != null) || (this.head == null && this.tail != null)) {
                 throw new Error(`We've made a terrible mistake! Head: ${this.head}, tail: ${this.tail}`);
             } else {
+                // Insert the new element at the end of the list.
                 prevElement = this.tail;
                 prevElement.setNext(newElement);
                 newElement.setPrev(prevElement);
@@ -103,6 +184,11 @@ export default class LinkedList {
         }
     }
 
+    /**
+     * Searches the list for an element with a certain value.
+     * @param {Object} value The value to search for.
+     * @return {Object} The first found element's value. <code>null</code> otherwise.
+     */
     contains (value) {
         if (this.getFirstObject(value) !== null) {
             return this.getFirstObject(value).getValue();
@@ -110,7 +196,18 @@ export default class LinkedList {
         return null;
     }
 
+    /**
+     * Returns the value of an element at a certain position.
+     * @param {Integer} index The position to look at.
+     * @return {Object} The found value. Null otherwise.
+     * @throws IndexOutOfBoundsException if the passed index
+     *         is not within the bounds of the list.
+     */
     get (index) {
+        if (typeof index !== 'number') {
+            throw new Error('Invalid index type!');
+        }
+
         if (index < 0 || index >= this.getSize()) {
             throw new Error(`Index ${index} is out of bounds!`);
         }
@@ -121,6 +218,10 @@ export default class LinkedList {
         return null;
     }
 
+    /**
+     * Returns the current head (first element) of the list
+     * @return {Object} The head (first element) of the list
+     */
     getHead () {
         if (this.head !== null) {
             return this.head.getValue();
@@ -128,10 +229,18 @@ export default class LinkedList {
         return null;
     }
 
+    /**
+     * Returns the list's size.
+     * @return {Integer} The list's size.
+     */
     getSize () {
         return this.size;
     }
 
+    /**
+     * Returns the current tail (last element) of the list
+     * @return {Object} The tail (last element) of the list
+     */
     getTail () {
         if (this.tail !== null) {
             return this.tail.getValue();
@@ -139,6 +248,11 @@ export default class LinkedList {
         return null;
     }
 
+    /**
+     * Returns the index of an element with a certain value.
+     * @param {Object} value The value to search for.
+     * @return {Integer} The position of the found element. <code>-1</code> otherwise.
+     */
     indexOf (value) {
         let index = -1;
         let element = this.head;
@@ -155,10 +269,21 @@ export default class LinkedList {
         return index;
     }
 
+    /**
+     * Returns a new iterator of the current list.
+     * @return {ListIterator} The new iterator.
+     */
     iterator () {
         return new ListIterator(this);
     }
 
+    /**
+     * Removes an element at a certain position from the list.
+     * @param index The position to look at or the value to find.
+     * @return The removed element's value. null otherwise.
+     * @throws IndexOutOfBoundsException if the passed index
+     *         is not within the bounds of the list.
+     */
     remove (arg) {
         if (typeof arg === 'string') {
             const value = arg;
@@ -182,6 +307,10 @@ export default class LinkedList {
         }
     }
 
+    /**
+     * Returns the whole list as a readable string, enclosed by brackets.
+     * @return {String} The whole list enclosed by brackets.
+     */
     toString () {
        let index = this.head;
        let output = "[ ";
@@ -198,15 +327,44 @@ export default class LinkedList {
     }
 }
 
+/**
+ * An iterator for the double-linked list.
+ */
 class ListIterator {
-    constructor () {
+    /**
+     * The constructor. Sets the current element to
+     *  the current lists' head.
+     * @param currentList The list to iterate over.
+     * @constructor
+     */
+    constructor (currentList) {
         this.currentElement = currentList.head;
     }
 
+    /**
+     * Checks if the iterator has a next element.
+     * @return {Boolean} true if there is a next element. false otherwise.
+     */
     hasNext () {
+        /*
+         * Uses currentElement instead of the
+         *  hasNext() method so we don't have
+         *  to use an additional counting
+         *  integer because the first
+         *  element is already set by the
+         *  constructor. Without currentElement
+         *  or a counting integer we wouldn't
+         *  be able to return the current
+         *  element but only the next one and
+         *  thus miss the first element.
+         */
         return currentElement != null;
     }
 
+    /**
+     * Returns the next object.
+     * @return {Object} The next object, <code>null</code> otherwise.
+     */
     next () {
         if (hasNext()) {
             const value = currentElement.getValue();
