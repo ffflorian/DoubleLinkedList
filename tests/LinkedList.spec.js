@@ -15,4 +15,19 @@ describe('ListElement', () => {
         element2.setPrev(element1);
         expect(element2.getPrev().getValue()).toEqual('one');
     });
+    it ('won\'t connect an invalid next element', () => {
+        const element1 = new ListElement('one');
+        expect(() => element1.setNext('error')).toThrow('Invalid next element!');
+    });
+    it ('won\'t connect an invalid previous element', () => {
+        const element1 = new ListElement('one');
+        expect(() => element1.setPrev('error')).toThrow('Invalid previous element!');
+    });
+    it ('won\'t accept an invalid value', () => {
+        expect(() => new ListElement()).toThrow('Invalid value!');
+        expect(() => new ListElement(null)).toThrow('Invalid value!');
+        const element1 = new ListElement('');
+        expect(() => element1.setValue()).toThrow('Invalid value!');
+        expect(() => element1.setValue(null)).toThrow('Invalid value!');
+    });
 });
