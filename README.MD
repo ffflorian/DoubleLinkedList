@@ -9,14 +9,28 @@ A linked list in which every element knows about its predecessor and its success
   prev        n         next
 ```
 
-### Setup
+### ES6 usage
+
+```js
+'use strict';
+
+import LinkedList from './LinkedList';
+
+const list = new LinkedList();
+list.add('one');
+list.add('two');
+list.add('three');
+list.get(0); // 'one'
+```
+
+### Setup for Node.js
 
 To use the project in Node.js, first install the npm packages:
 ```bash
 $ npm install
 ```
 
-Now you'll need to convert it to ES5 (because `import` is [not implemented yet](https://github.com/nodejs/help/issues/53)):
+Next you'll need to convert it to ES5 (because `import` is [not implemented yet](https://github.com/nodejs/help/issues/53)):
 ```bash
 $ npm run babel
 ```
@@ -25,16 +39,23 @@ Now you could use it like this:
 ```js
 'use strict';
 
-import LinkedList from './LinkedList';
+const LinkedList = require('./LinkedList');
 
-const linkedList = new LinkedList();
-linkedList.add('one');
-linkedList.add('two');
-linkedList.add('three');
-linkedList.get(0); // 'one'
+const list = new LinkedList();
+list.add('one');
+list.add('two');
+list.add('three');
+list.get(0); // 'one'
 ```
 
-You can also run a few tests:
+### Testing
+
+If you didn't install the npm packages yet, do it first:
+```bash
+$ npm install
+```
+
+Now run the tests:
 ```bash
 $ npm test
 ```

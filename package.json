@@ -2,7 +2,7 @@
   "name": "DoubleLinkedList.js",
   "version": "1.0.0",
   "description": "JavaScript implementation of a double-linked list",
-  "main": "DoubleLinkedList.js",
+  "main": "src/LinkedList.js",
   "scripts": {
     "start": "npm run -s babel",
     "test": "npm run -s babel && npm run -s babel-tests && jasmine-node dist/",
