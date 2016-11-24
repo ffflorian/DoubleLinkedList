@@ -16,7 +16,7 @@ To use the project in Node.js, first install the npm packages:
 $ npm install
 ```
 
-To use this project in Node.js, you need to convert it to ES5 first:
+Now you'll need to convert it to ES5 (because `import` is [not implemented yet](https://github.com/nodejs/help/issues/53)):
 (because `import` is [not implemented yet](https://github.com/nodejs/help/issues/53).)
 ```bash
 $ npm run babel
