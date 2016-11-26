@@ -10,7 +10,6 @@
 import ListElement from './ListElement';
 
 export default class LinkedList {
-
     /**
      * The constructor. Sets the head and the tail
      *  to null since they don't exist yet.
@@ -46,41 +45,49 @@ export default class LinkedList {
     }
 
     /**
-     * Returns an object at a certain position.
-     * @param {arg} The position to find the element at
-     *              or the value to find in the list.
+     * Returns a ListElement at a certain position.
+     * @param {index} The position to find the element at.
      * @return {ListElement} The found object.
      */
-    getFirstObject (arg) {
-        if (typeof arg === 'string') {
-            const value = arg;
-            let output = null;
-            let element = this.head;
-            for (let i = 0; i <= this.getSize(); i++) {
-                if (element != null) {
-                    if (element.getValue() == value) {
-                        output = element;
-                        break;
-                    } else {
-                        element = element.getNext();
-                    }
-                }
-            }
-            return output;
-        } else if (typeof arg === 'number') {
-            const index = arg;
-            let element = this.head;
-            for (let i = 1; i <= index; i++) {
-                element = element.getNext();
-            }
-            return element;
-        } else {
+    getElementAtIndex (index) {
+        if (typeof index !== 'number') {
             throw new Error('Invalid argument!');
         }
+        let element = this.head;
+        for (let i = 1; i <= index; i++) {
+            element = element.getNext();
+        }
+        return element;
     }
 
     /**
-     * Removes a certain element from the list by
+     * Returns a ListElement with a certain value.
+     * @param {value} The value to find in the list.
+     * @return {ListElement} The first found ListElement.
+               null otherwise.
+     */
+    getFirstElement (value) {
+        if (typeof value !== 'string') {
+            throw new Error('Invalid argument!');
+        }
+        let output = null;
+        let element = this.head;
+        // can also be implemented as while (element.hasNext())
+        for (let i = 0; i <= this.getSize(); i++) {
+            if (element != null) {
+                if (element.getValue() === value) {
+                    output = element;
+                    break;
+                } else {
+                    element = element.getNext();
+                }
+            }
+        }
+        return output;
+    }
+
+    /**
+     * Removes a certain ListElement from the list by
      *  connecting the elements before and after the
      *  old element.
      *  _______    _______    _______
@@ -90,16 +97,23 @@ export default class LinkedList {
      *   prev     current      next
      * @param {ListElement} currentElement The element to remove.
      */
-    removeObject (currentElement) {
+    removeElement (currentElement) {
         if (!(currentElement instanceof ListElement)) {
             throw new Error('Invalid next element!');
         }
         const prevElement = currentElement.getPrev();
         const nextElement = currentElement.getNext();
 
-        prevElement.setNext(nextElement);
-        nextElement.setPrev(prevElement);
-
+        if (prevElement !== null) {
+            prevElement.setNext(nextElement);
+        } else {
+            this.head = nextElement;
+        }
+        if (nextElement !== null) {
+            nextElement.setPrev(prevElement);
+        } else {
+            this.tail = prevElement;
+        }
         // Set the old element to null so the garbage collector
         //  can remove it.
         currentElement = null;
@@ -126,11 +140,11 @@ export default class LinkedList {
         if (typeof args[0] === 'number' && typeof args[1] === 'string') {
             const index = args[0];
             const value = args[1];
-            if (index < 0 || index >= this.size) {
+            if (index < 0 || index >= this.getSize()) {
                 throw new Error(`Index ${index} is out of bounds!`);
             }
 
-            let newElement = new ListElement(value);
+            const newElement = new ListElement(value);
 
             if (this.tail == null && this.head == null) {
                 // Set head and tail both to be the new element
@@ -138,13 +152,14 @@ export default class LinkedList {
                 //  the new element is both head and tail.
                 this.head = newElement;
                 this.tail = newElement;
+                this.size++;
             } else if ((this.tail == null && this.head != null) || (this.head == null && this.tail != null)) {
                 // Something went wrong and they are not both null.
                 throw new Error(`We've made a terrible mistake! Head: ${this.head}, tail: ${this.tail}`);
             } else {
                 // nextElement points to the object behind
                 //  which the new element should be added.
-                let nextElement = this.getFirstObject(index);
+                let nextElement = this.getElementAtIndex(index);
                 // prevElement points to the position
                 // behind which the new element should be added.
                 let prevElement = nextElement.getPrev();
@@ -152,15 +167,20 @@ export default class LinkedList {
                 // Insert the new element between prev and next.
                 newElement.setPrev(prevElement);
                 newElement.setNext(nextElement);
-                prevElement.setNext(newElement);
+                if (prevElement != null) {
+                    prevElement.setNext(newElement);
+                } else {
+                    // if there is no previous element we have a new head
+                    this.head = newElement;
+                }
                 nextElement.setPrev(newElement);
+                this.size++;
             }
-            this.size++;
             return;
         } else if (typeof args[0] === 'string') {
             const value = args[0];
+            const newElement = new ListElement(value);
             let prevElement;
-            let newElement = new ListElement(value);
 
             if (this.tail == null && this.head == null) {
                 // Set head and tail both to be the new element
@@ -168,6 +188,7 @@ export default class LinkedList {
                 //  the new element is both head and tail.
                 this.head = newElement;
                 this.tail = newElement;
+                this.size++;
             } else if ((this.tail == null && this.head != null) || (this.head == null && this.tail != null)) {
                 throw new Error(`We've made a terrible mistake! Head: ${this.head}, tail: ${this.tail}`);
             } else {
@@ -176,8 +197,8 @@ export default class LinkedList {
                 prevElement.setNext(newElement);
                 newElement.setPrev(prevElement);
                 this.tail = newElement;
+                this.size++;
             }
-            this.size++;
             return;
         } else {
             throw new Error('Invalid argument!');
@@ -190,8 +211,9 @@ export default class LinkedList {
      * @return {Object} The first found element's value. <code>null</code> otherwise.
      */
     contains (value) {
-        if (this.getFirstObject(value) !== null) {
-            return this.getFirstObject(value).getValue();
+        const firstElement = this.getFirstElement(value);
+        if (firstElement !== null) {
+            return firstElement.getValue();
         }
         return null;
     }
@@ -212,8 +234,9 @@ export default class LinkedList {
             throw new Error(`Index ${index} is out of bounds!`);
         }
 
-        if (this.getFirstObject(index) != null) {
-            return this.getFirstObject(index).getValue();
+        const elementAtIndex = this.getElementAtIndex(index);
+        if (elementAtIndex != null) {
+            return elementAtIndex.getValue();
         }
         return null;
     }
@@ -258,7 +281,7 @@ export default class LinkedList {
         let element = this.head;
         for (let i = 0; i <= this.getSize(); i++) {
             if (element != null) {
-                if (element.getValue() == value) {
+                if (element.getValue() === value) {
                     index = i;
                     break;
                 } else {
@@ -287,9 +310,9 @@ export default class LinkedList {
     remove (arg) {
         if (typeof arg === 'string') {
             const value = arg;
-            let element = this.getFirstObject(value);
+            const element = this.getFirstElement(value);
             if (element !== null) {
-                this.removeObject(element);
+                this.removeElement(element);
                 return value;
             }
             return null;
@@ -298,10 +321,12 @@ export default class LinkedList {
             if (index < 0 || index >= this.getSize()) {
                 throw new Error(`Index ${index} is out of bounds!`);
             }
-            const value = this.get(index);
-            let element = this.getFirstObject(index);
-            this.removeObject(element);
-            return value;
+            let element = this.getElementAtIndex(index);
+            if (element !== null) {
+                this.removeElement(element);
+                return element.getValue();
+            }
+            return null;
         } else {
             throw new Error('Invalid argument!');
         }
@@ -324,6 +349,25 @@ export default class LinkedList {
            index = index.getNext();
        }
        return output + " ]";
+    }
+
+    /**
+     * Returns the whole list as a detailed string, enclosed by brackets.
+     * @return The whole list enclosed by brackets.
+     */
+    toDetailedString () {
+        let index = this.head;
+        let output = "[ ";
+        let seperator = ", ";
+
+        while (index !== null) {
+           if (index.getNext() === null) {
+               seperator = "";
+           }
+           output += `${index.getPrev()}<-*${index.getValue()}*->${index.getNext()}${seperator}`;
+           index = index.getNext();
+        }
+        return `${output} ]`;
     }
 }
 
