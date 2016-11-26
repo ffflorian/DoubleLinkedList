@@ -295,11 +295,24 @@ export default class LinkedList {
     }
 
     /**
-     * Returns a new iterator of the current list.
-     * @return {ListIterator} The new iterator.
+     * An iterator for the double-linked list with the
+     * help of generators.
+     * @return {ListIterator} The new generator as iterator.
      */
-    iterator () {
-        return new ListIterator(this);
+     * iterator () {
+        let currentElement = this.head;
+        let atHead = true;
+        // needs to check if currentElement is null
+        // otherwise we get a NullPointerException if
+        // we iterate over an empty list.
+        while (currentElement !== null && currentElement.getNext() !== null) {
+            if (atHead === true) {
+                atHead = false;
+            } else {
+                currentElement = currentElement.getNext();
+            }
+            yield currentElement.getValue();
+        }
     }
 
     /**
@@ -370,48 +383,5 @@ export default class LinkedList {
            index = index.getNext();
         }
         return `${output} ]`;
-    }
-}
-
-/**
- * An iterator for the double-linked list.
- */
-class ListIterator {
-    /**
-     * The constructor. Sets the current element to
-     *  the current lists' head.
-     * @param currentList The list to iterate over.
-     * @constructor
-     */
-    constructor (currentList) {
-        if (!(currentList instanceof LinkedList)) {
-            throw new Error('Invalid argument!');
-        }
-        this.currentElement = currentList.head;
-        this.atHead = true;
-    }
-
-    /**
-     * Checks if the iterator has a next element.
-     * @return {Boolean} true if there is a next element. false otherwise.
-     */
-    hasNext () {
-         // needs to check if currentElement is null
-         // otherwise we get a NullPointerException if
-         // we iterate over an empty list.
-        return this.currentElement !== null && this.currentElement.getNext() !== null;
-    }
-
-    /**
-     * Returns the next element's value.
-     * @return {Object} The next element's value, null otherwise.
-     */
-    next () {
-        if (this.atHead === true) {
-            atHead = false;
-        } else {
-            this.currentElement = this.currentElement.getNext();
-        }
-        return this.currentElement.getValue();
     }
 }

@@ -85,4 +85,17 @@ describe('LinkedList', () => {
         DLL.remove('two');
         expect(DLL.get(1)).toEqual('three');
     });
+
+    it ('iterates over the list', () => {
+        const DLL = new LinkedList();
+        DLL.add('zero');
+        DLL.add('one');
+        DLL.add('two');
+        DLL.add('three');
+        const iterator = DLL.iterator();
+        expect(iterator.next().value).toEqual('zero');
+        expect(iterator.next().value).toEqual('one');
+        expect(iterator.next().value).toEqual('two');
+        expect(iterator.next().value).toEqual('three');
+    });
 });
