@@ -327,6 +327,7 @@ export default class LinkedList {
             const value = arg;
             const element = this.getFirstElement(value);
             if (element !== null) {
+                const value = element.getValue();
                 this.removeElement(element);
                 return value;
             }
@@ -337,11 +338,9 @@ export default class LinkedList {
                 throw new Error(`Index ${index} is out of bounds!`);
             }
             let element = this.getElementAtIndex(index);
-            if (element !== null) {
-                this.removeElement(element);
-                return element.getValue();
-            }
-            return null;
+            const value = element.getValue();
+            this.removeElement(element);
+            return value;
         } else {
             throw new Error('Invalid argument!');
         }
