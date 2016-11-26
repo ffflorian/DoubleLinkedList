@@ -67,12 +67,8 @@ export default class LinkedList {
                null otherwise.
      */
     getFirstElement (value) {
-        if (typeof value !== 'string') {
-            throw new Error('Invalid argument!');
-        }
         let output = null;
         let element = this.head;
-        // can also be implemented as while (element.hasNext())
         for (let i = 0; i <= this.getSize(); i++) {
             if (element != null) {
                 if (element.getValue() === value) {
@@ -137,7 +133,7 @@ export default class LinkedList {
         if (args.length === 0) {
             throw new Error('No arguments given!');
         }
-        if (typeof args[0] === 'number' && typeof args[1] === 'string') {
+        if (typeof args[0] === 'number' && (args[1] !== null && typeof args[1] !== 'undefined')) {
             const index = args[0];
             const value = args[1];
             if (index < 0 || index >= this.getSize()) {
@@ -149,7 +145,7 @@ export default class LinkedList {
             if (this.tail == null && this.head == null) {
                 // Set head and tail both to be the new element
                 //  because they don't exist yet and thus
-                //  the new element is both head and tail.
+                //  the new element is both head and tail (empty list).
                 this.head = newElement;
                 this.tail = newElement;
                 this.size++;
@@ -211,6 +207,9 @@ export default class LinkedList {
      * @return {Object} The first found element's value. <code>null</code> otherwise.
      */
     contains (value) {
+        if (value === null || typeof value === 'undefined') {
+            throw new Error('Invalid argument!');
+        }
         const firstElement = this.getFirstElement(value);
         if (firstElement !== null) {
             return firstElement.getValue();
@@ -242,8 +241,8 @@ export default class LinkedList {
     }
 
     /**
-     * Returns the current head (first element) of the list
-     * @return {Object} The head (first element) of the list
+     * Returns the current head's value (first element) of the list
+     * @return {Object} The head's value (first element) of the list
      */
     getHead () {
         if (this.head !== null) {
@@ -261,8 +260,8 @@ export default class LinkedList {
     }
 
     /**
-     * Returns the current tail (last element) of the list
-     * @return {Object} The tail (last element) of the list
+     * Returns the current tail's value (last element) of the list
+     * @return {Object} The tail's value (last element) of the list
      */
     getTail () {
         if (this.tail !== null) {
@@ -272,11 +271,14 @@ export default class LinkedList {
     }
 
     /**
-     * Returns the index of an element with a certain value.
+     * Returns the index of the first found element with a certain value.
      * @param {Object} value The value to search for.
-     * @return {Integer} The position of the found element. <code>-1</code> otherwise.
+     * @return {Integer} The position of the found element. -1 otherwise.
      */
     indexOf (value) {
+        if (value === null || typeof value === 'undefined') {
+            throw new Error('Invalid argument!');
+        }
         let index = -1;
         let element = this.head;
         for (let i = 0; i <= this.getSize(); i++) {
@@ -382,7 +384,11 @@ class ListIterator {
      * @constructor
      */
     constructor (currentList) {
+        if (!(currentList instanceof LinkedList)) {
+            throw new Error('Invalid argument!');
+        }
         this.currentElement = currentList.head;
+        this.atHead = true;
     }
 
     /**
@@ -390,31 +396,22 @@ class ListIterator {
      * @return {Boolean} true if there is a next element. false otherwise.
      */
     hasNext () {
-        /*
-         * Uses currentElement instead of the
-         *  hasNext() method so we don't have
-         *  to use an additional counting
-         *  integer because the first
-         *  element is already set by the
-         *  constructor. Without currentElement
-         *  or a counting integer we wouldn't
-         *  be able to return the current
-         *  element but only the next one and
-         *  thus miss the first element.
-         */
-        return currentElement != null;
+         // needs to check if currentElement is null
+         // otherwise we get a NullPointerException if
+         // we iterate over an empty list.
+        return this.currentElement !== null && this.currentElement.getNext() !== null;
     }
 
     /**
-     * Returns the next object.
-     * @return {Object} The next object, <code>null</code> otherwise.
+     * Returns the next element's value.
+     * @return {Object} The next element's value, null otherwise.
      */
     next () {
-        if (hasNext()) {
-            const value = currentElement.getValue();
-            this.currentElement = currentElement.getNext();
-            return value;
+        if (this.atHead === true) {
+            atHead = false;
+        } else {
+            this.currentElement = this.currentElement.getNext();
         }
-        return null;
+        return this.currentElement.getValue();
     }
 }
