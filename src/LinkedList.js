@@ -7,9 +7,9 @@
  * @author Florian Keller <github@floriankeller.de>
  */
 
-import ListElement from './ListElement';
+const ListElement = require('./ListElement');
 
-export default class LinkedList {
+module.exports = class LinkedList {
     /**
      * The constructor. Sets the head and the tail
      *  to null since they don't exist yet.
@@ -51,11 +51,11 @@ export default class LinkedList {
      */
     getElementAtIndex (index) {
         if (typeof index !== 'number') {
-            throw new Error('Invalid argument!');
+            throw new TypeError('Invalid argument!');
         }
         let element = this.head;
         for (let i = 1; i <= index; i++) {
-            element = element.getNext();
+            element = (element !== null ? element.getNext() : null);
         }
         return element;
     }
@@ -70,12 +70,12 @@ export default class LinkedList {
         let output = null;
         let element = this.head;
         for (let i = 0; i <= this.getSize(); i++) {
-            if (element != null) {
+            if (element !== null) {
                 if (element.getValue() === value) {
                     output = element;
                     break;
                 } else {
-                    element = element.getNext();
+                    element = (element !== null ? element.getNext() : null);
                 }
             }
         }
@@ -95,7 +95,7 @@ export default class LinkedList {
      */
     removeElement (currentElement) {
         if (!(currentElement instanceof ListElement)) {
-            throw new Error('Invalid next element!');
+            throw new TypeError('Invalid next element!');
         }
         const prevElement = currentElement.getPrev();
         const nextElement = currentElement.getNext();
@@ -131,7 +131,7 @@ export default class LinkedList {
      */
     add (...args) {
         if (args.length === 0) {
-            throw new Error('No arguments given!');
+            throw new TypeError('No arguments given!');
         }
         if (typeof args[0] === 'number' && (args[1] !== null && typeof args[1] !== 'undefined')) {
             const index = args[0];
@@ -142,34 +142,40 @@ export default class LinkedList {
 
             const newElement = new ListElement(value);
 
-            if (this.tail == null && this.head == null) {
+            if (this.tail === null && this.head === null) {
                 // Set head and tail both to be the new element
                 //  because they don't exist yet and thus
                 //  the new element is both head and tail (empty list).
                 this.head = newElement;
                 this.tail = newElement;
                 this.size++;
-            } else if ((this.tail == null && this.head != null) || (this.head == null && this.tail != null)) {
+            } else if ((this.tail === null && this.head !== null) || (this.head === null && this.tail !== null)) {
                 // Something went wrong and they are not both null.
-                throw new Error(`We've made a terrible mistake! Head: ${this.head}, tail: ${this.tail}`);
+                throw new Error('We\'ve made a terrible mistake! Head: ' +
+                                    (this.head !== null ? this.head.toString() : 'null') +
+                                ', tail: ' +
+                                    (this.tail !== null ? this.tail.toString() : 'null')
+                                )
             } else {
                 // nextElement points to the object behind
                 //  which the new element should be added.
                 let nextElement = this.getElementAtIndex(index);
                 // prevElement points to the position
                 // behind which the new element should be added.
-                let prevElement = nextElement.getPrev();
+                let prevElement = (nextElement !== null ? nextElement.getPrev() : null);
 
                 // Insert the new element between prev and next.
                 newElement.setPrev(prevElement);
                 newElement.setNext(nextElement);
-                if (prevElement != null) {
+                if (prevElement !== null) {
                     prevElement.setNext(newElement);
                 } else {
                     // if there is no previous element we have a new head
                     this.head = newElement;
                 }
-                nextElement.setPrev(newElement);
+                if (nextElement !== null) {
+                    nextElement.setPrev(newElement);
+                }
                 this.size++;
             }
             return;
@@ -178,26 +184,32 @@ export default class LinkedList {
             const newElement = new ListElement(value);
             let prevElement;
 
-            if (this.tail == null && this.head == null) {
+            if (this.tail === null && this.head === null) {
                 // Set head and tail both to be the new element
                 //  because they don't exist yet and thus
                 //  the new element is both head and tail.
                 this.head = newElement;
                 this.tail = newElement;
                 this.size++;
-            } else if ((this.tail == null && this.head != null) || (this.head == null && this.tail != null)) {
-                throw new Error(`We've made a terrible mistake! Head: ${this.head}, tail: ${this.tail}`);
+            } else if ((this.tail === null && this.head !== null) || (this.head === null && this.tail !== null)) {
+                throw new Error('We\'ve made a terrible mistake! Head: ' +
+                                    (this.head !== null ? this.head.toString() : 'null') +
+                                ', tail: ' +
+                                    (this.tail !== null ? this.tail.toString() : 'null')
+                                )
             } else {
                 // Insert the new element at the end of the list.
                 prevElement = this.tail;
-                prevElement.setNext(newElement);
+                if (prevElement !== null) {
+                    prevElement.setNext(newElement);
+                }
                 newElement.setPrev(prevElement);
                 this.tail = newElement;
                 this.size++;
             }
             return;
         } else {
-            throw new Error('Invalid argument!');
+            throw new TypeError('Invalid argument!');
         }
     }
 
@@ -208,7 +220,7 @@ export default class LinkedList {
      */
     contains (value) {
         if (value === null || typeof value === 'undefined') {
-            throw new Error('Invalid argument!');
+            throw new TypeError('Invalid argument!');
         }
         const firstElement = this.getFirstElement(value);
         if (firstElement !== null) {
@@ -226,7 +238,7 @@ export default class LinkedList {
      */
     get (index) {
         if (typeof index !== 'number') {
-            throw new Error('Invalid index type!');
+            throw new TypeError('Invalid index type!');
         }
 
         if (index < 0 || index >= this.getSize()) {
@@ -234,7 +246,7 @@ export default class LinkedList {
         }
 
         const elementAtIndex = this.getElementAtIndex(index);
-        if (elementAtIndex != null) {
+        if (elementAtIndex !== null) {
             return elementAtIndex.getValue();
         }
         return null;
@@ -277,12 +289,12 @@ export default class LinkedList {
      */
     indexOf (value) {
         if (value === null || typeof value === 'undefined') {
-            throw new Error('Invalid argument!');
+            throw new TypeError('Invalid argument!');
         }
         let index = -1;
         let element = this.head;
         for (let i = 0; i <= this.getSize(); i++) {
-            if (element != null) {
+            if (element !== null) {
                 if (element.getValue() === value) {
                     index = i;
                     break;
@@ -311,7 +323,7 @@ export default class LinkedList {
             } else {
                 currentElement = currentElement.getNext();
             }
-            yield currentElement.getValue();
+            yield (currentElement !== null ? currentElement.getValue() : null);
         }
     }
 
@@ -338,11 +350,11 @@ export default class LinkedList {
                 throw new Error(`Index ${index} is out of bounds!`);
             }
             let element = this.getElementAtIndex(index);
-            const value = element.getValue();
+            const value = (element !== null ? element.getValue() : '');
             this.removeElement(element);
             return value;
         } else {
-            throw new Error('Invalid argument!');
+            throw new TypeError('Invalid argument!');
         }
     }
 
@@ -352,12 +364,12 @@ export default class LinkedList {
      */
     toString () {
        let index = this.head;
-       let output = "[ ";
-       let seperator = ", ";
+       let output = '[ ';
+       let seperator = ', ';
 
        while (index !== null) {
            if (index.getNext() === null) {
-               seperator = "";
+               seperator = '';
            }
            output += index.getValue() + seperator;
            index = index.getNext();
@@ -378,7 +390,12 @@ export default class LinkedList {
            if (index.getNext() === null) {
                seperator = "";
            }
-           output += `${index.getPrev()}<-*${index.getValue()}*->${index.getNext()}${seperator}`;
+           output += (index.getPrev() || 'null').toString()
+                     + '<-*'
+                     + (index.getValue() || 'null').toString()
+                     + '*->' +
+                     + (index.getNext() || 'null').toString()
+                     + seperator;
            index = index.getNext();
         }
         return `${output} ]`;

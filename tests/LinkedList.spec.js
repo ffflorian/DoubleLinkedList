@@ -1,9 +1,16 @@
 'use strict';
 
-import LinkedList from './LinkedList';
+/**
+ * Tests for double-linked list.
+ *
+ * Date: 2016-11-18
+ * @author Florian Keller <github@floriankeller.de>
+ */
+
+const LinkedList = require('../src/LinkedList');
 
 describe('LinkedList', () => {
-    it ('can add an element', () => {
+    it('can add an element', () => {
         const list = new LinkedList();
         list.add('zero');
         list.add('one');
@@ -15,7 +22,7 @@ describe('LinkedList', () => {
         expect(list.get(3)).toEqual('three');
     });
 
-    it ('can add an element at a certain index', () => {
+    it('can add an element at a certain index', () => {
         const list = new LinkedList();
         list.add('zero');
         list.add('one');
@@ -27,7 +34,7 @@ describe('LinkedList', () => {
         expect(list.get(3)).toEqual('three');
     });
 
-    it ('won\'t find a non-existing element', () => {
+    it('won\'t find a non-existing element', () => {
         const list = new LinkedList();
         list.add('zero');
         list.add('one');
@@ -38,7 +45,7 @@ describe('LinkedList', () => {
         expect(list.contains('error')).toBeNull();
     });
 
-    it ('won\'t go outside the list\'s bounds', () => {
+    it('won\'t go outside the list\'s bounds', () => {
         const list = new LinkedList();
         expect(() => list.get(0)).toThrow('Index 0 is out of bounds!');
         list.add('zero');
@@ -46,7 +53,7 @@ describe('LinkedList', () => {
         expect(() => list.remove(2)).toThrow('Index 2 is out of bounds!');
     });
 
-    it ('gets the list\'s head and tail', () => {
+    it('gets the list\'s head and tail', () => {
         const list = new LinkedList();
         list.add('zero');
         list.add('one');
@@ -55,7 +62,7 @@ describe('LinkedList', () => {
         expect(list.getTail()).toEqual('two');
     });
 
-    it ('gets the correct index', () => {
+    it('gets the correct index', () => {
         const list = new LinkedList();
         expect(list.indexOf('error')).toEqual(-1);
         list.add('zero');
@@ -65,7 +72,7 @@ describe('LinkedList', () => {
         expect(list.indexOf('one')).toEqual(1);
     });
 
-    it ('gets the correct size', () => {
+    it('gets the correct size', () => {
         const list = new LinkedList();
         expect(list.getSize()).toEqual(0);
         list.add('zero');
@@ -74,7 +81,7 @@ describe('LinkedList', () => {
         expect(list.getSize()).toEqual(3);
     });
 
-    it ('removes the correct element', () => {
+    it('removes the correct element', () => {
         const list = new LinkedList();
         list.add('zero');
         list.add('one');
@@ -86,7 +93,7 @@ describe('LinkedList', () => {
         expect(list.get(1)).toEqual('three');
     });
 
-    it ('iterates with next over the list', () => {
+    it('iterates with next over the list', () => {
         const list = new LinkedList();
         let iterator = list.iterator();
         list.add('zero');
@@ -100,7 +107,7 @@ describe('LinkedList', () => {
         expect(iterator.next().done).toEqual(true);
     });
 
-    it ('iterates with for over the list', () => {
+    it('iterates with for over the list', () => {
         const list = new LinkedList();
         let str = '';
         list.add('zero');

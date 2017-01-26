@@ -7,8 +7,7 @@
  * @author Florian Keller <github@floriankeller.de>
  */
 
-export default class ListElement {
-
+module.exports = class ListElement {
     /**
      * The constructor. Sets the head and the tail
      *  to null since they are not known yet.
@@ -17,7 +16,7 @@ export default class ListElement {
      */
     constructor (value) {
         if (value === null || typeof value === 'undefined') {
-            throw new Error('Invalid value!');
+            throw new TypeError('Invalid value!');
         }
 
         /**
@@ -76,7 +75,7 @@ export default class ListElement {
      */
     setNext (next) {
         if (!(next instanceof ListElement)) {
-            throw new Error('Invalid next element!');
+            throw new TypeError('Invalid next element!');
         }
         this.next = next;
     }
@@ -87,7 +86,7 @@ export default class ListElement {
      */
     setPrev (prev) {
         if (!(prev instanceof ListElement)) {
-            throw new Error('Invalid previous element!');
+            throw new TypeError('Invalid previous element!');
         }
         this.prev = prev;
     }
@@ -98,7 +97,7 @@ export default class ListElement {
      */
     setValue (value) {
         if (value === null || typeof value === 'undefined') {
-            throw new Error('Invalid value!');
+            throw new TypeError('Invalid value!');
         }
         this.value = value;
     }
