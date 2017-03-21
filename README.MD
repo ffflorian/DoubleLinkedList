@@ -11,11 +11,10 @@ A linked list in which every element knows about its predecessor and its success
 
 ### Usage
 
-To use the project in Node.js:
 ```js
 'use strict';
 
-const LinkedList = require('./LinkedList');
+const { LinkedList } = require('./DoubleLinkedList');
 
 const list = new LinkedList();
 list.add('one');
@@ -35,5 +34,3 @@ Now run the tests:
 ```bash
 $ npm test
 ```
-
-Have fun!

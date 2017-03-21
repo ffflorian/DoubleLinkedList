@@ -7,7 +7,7 @@
  * @author Florian Keller <github@floriankeller.de>
  */
 
-const { ListElement, LinkedList } = require('../src/LinkedList');
+const { ListElement, LinkedList } = require('../src/DoubleLinkedList');
 
 describe('ListElement', () => {
     it('has a value', () => {

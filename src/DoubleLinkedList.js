@@ -8,13 +8,13 @@
  * @author Florian Keller <github@floriankeller.de>
  */
 
-const ListElement = class {
-    /**
-     * The constructor. Sets the head and the tail
-     *  to null since they are not known yet.
-     * @constructor
-     * @param {Object} value The value to set.
-     */
+/**
+ * A list element. By default the head and the tail are set to `null` since they don't exist yet.
+ * @class ListElement
+ * @param {*} value - The value to set.
+ * @returns {void}
+ */
+class ListElement {
     constructor (value) {
         if (value === null || typeof value === 'undefined') {
             throw new TypeError('Invalid value!');
@@ -27,6 +27,7 @@ const ListElement = class {
          * |*|**|*<---- |  | |
          * |_|__|_|   |_|__|_|
          * previous   current
+         * @type {*}
          */
         this.prev = null;
 
@@ -37,18 +38,20 @@ const ListElement = class {
          * | |  | ---->*|**|*|
          * |_|__|_|   |_|__|_|
          * current      next
+         * @type {*}
          */
         this.next = null;
 
         /**
          * The value which the element should contain.
+         * @type {*}
          */
         this.value = value;
     }
 
     /**
      * Returns the next element.
-     * @return {ListElement} The next element. null otherwise.
+     * @returns {ListElement} - The next element. `null` otherwise.
      */
     getNext () {
         return this.next;
@@ -56,7 +59,7 @@ const ListElement = class {
 
     /**
      * Returns the previous element.
-     * @return {ListElement} The previous element. null otherwise.
+     * @returns {ListElement} - The previous element. `null` otherwise.
      */
     getPrev () {
         return this.prev;
@@ -64,7 +67,7 @@ const ListElement = class {
 
     /**
      * Returns the value.
-     * @return {Object} The value.
+     * @returns {*} - The value.
      */
     getValue () {
         return this.value;
@@ -72,7 +75,9 @@ const ListElement = class {
 
     /**
      * Sets the next element.
-     * @param {ListElement} next The element to set.
+     * @param {!ListElement} next - The element to set.
+     * @returns {void}
+     * @throws {TypeError} - When `next` is not a ListElement
      */
     setNext (next) {
         if (!(next instanceof ListElement)) {
@@ -83,7 +88,9 @@ const ListElement = class {
 
     /**
      * Sets the previous element.
-     * @param {ListElement} prev The element to set.
+     * @param {ListElement} prev - The element to set.
+     * @returns {void}
+     * @throws {TypeError} - When `prev` is `null` or `undefined`
      */
     setPrev (prev) {
         if (!(prev instanceof ListElement)) {
@@ -94,7 +101,9 @@ const ListElement = class {
 
     /**
      * Sets the value.
-     * @param {Object} value The value to set.
+     * @param {*} value - The value to set.
+     * @returns {void}
+     * @throws {TypeError} - When `value` is `null` or `undefined`
      */
     setValue (value) {
         if (value === null || typeof value === 'undefined') {
@@ -105,7 +114,7 @@ const ListElement = class {
 
     /**
      * Returns the value readable and enclosed by array-like brackets.
-     * @return The value with array-like brackets.
+     * @returns {string} - The value with array-like brackets.
      */
     toString () {
         return `[ ${this.getValue()} ]`;
@@ -113,21 +122,12 @@ const ListElement = class {
 }
 
 /**
- * A double-linked list.
- *
- * Date: 2016-11-18
- * @author Florian Keller <github@floriankeller.de>
+ * The linked list. By default the head and the tail are set to `null` since they don't exist yet.
+ * Also the size is set to 0 because the list doesn't contain any elements yet.
+ * @class LinkedList
+ * @returns {void}
  */
-
-const LinkedList = class {
-
-    /**
-     * The constructor. Sets the head and the tail
-     *  to null since they don't exist yet.
-     * Also sets the size to 0 because the
-     *  list doesn't contain any elements yet.
-     * @constructor
-     */
+class LinkedList {
     constructor () {
         /**
          * The current head (first element).
@@ -136,6 +136,7 @@ const LinkedList = class {
          * |*|**|*<---> |  | |
          * |_|__|_|   |_|__|_|
          *   head       next
+         * @type {*}
          */
         this.head = null;
 
@@ -146,19 +147,22 @@ const LinkedList = class {
          * | |  | <--->*|**|*|
          * |_|__|_|   |_|__|_|
          *   prev       tail
+         * @type {*}
          */
         this.tail = null;
 
         /**
          * The size of the list.
+         * @type {number}
          */
         this.size = 0;
     }
 
     /**
      * Returns a ListElement at a certain position.
-     * @param {index} The position to find the element at.
-     * @return {ListElement} The found object.
+     * @param {!number} index - The position to find the element at.
+     * @returns {ListElement} - The found object.
+     * @throws {TypeError} - When `index` is not a number
      */
     getElementAtIndex (index) {
         if (typeof index !== 'number') {
@@ -173,9 +177,8 @@ const LinkedList = class {
 
     /**
      * Returns a ListElement with a certain value.
-     * @param {value} The value to find in the list.
-     * @return {ListElement} The first found ListElement.
-               null otherwise.
+     * @param {*} value - The value to find in the list.
+     * @returns {ListElement} - The first found ListElement. `null` otherwise.
      */
     getFirstElement (value) {
         let output = null;
@@ -202,7 +205,8 @@ const LinkedList = class {
      * |*|**|*<-------------->*|**|*|
      * |_|__|_|   |_|__|_|   |_|__|_|
      *   prev     current      next
-     * @param {ListElement} currentElement The element to remove.
+     * @param {!ListElement} currentElement - The element to remove.
+     * @throws {TypeError} - When `currentElement` is not a ListElement
      */
     removeElement (currentElement) {
         if (!(currentElement instanceof ListElement)) {
@@ -221,8 +225,7 @@ const LinkedList = class {
         } else {
             this.tail = prevElement;
         }
-        // Set the old element to null so the garbage collector
-        //  can remove it.
+        // Set the old element to null so the garbage collector can remove it.
         currentElement = null;
         this.size--;
     }
@@ -235,10 +238,11 @@ const LinkedList = class {
      * | |  | <---> |  | <--->*|**|*|
      * |_|__|_|   |_|__|_|   |_|__|_|
      *    n         tail       new
-     * @param {Object} args The value which the element should contain.
+     * @param {...(number|*)} args - The value which the element should contain.
      * And possibly the index where the element should be inserted.
-     * @throws IllegalArgumentException if the value is null.
-     * @throws NullPointerException if both head and tail are null.
+     * @throws {TypeError} - If the value is null.
+     * @throws {Error} - If both head and tail are null.
+     * @returns {void}
      */
     add (...args) {
         if (args.length === 0) {
@@ -262,11 +266,7 @@ const LinkedList = class {
                 this.size++;
             } else if ((this.tail === null && this.head !== null) || (this.head === null && this.tail !== null)) {
                 // Something went wrong and they are not both null.
-                throw new Error('We\'ve made a terrible mistake! Head: ' +
-                                    (this.head !== null ? this.head.toString() : 'null') +
-                                ', tail: ' +
-                                    (this.tail !== null ? this.tail.toString() : 'null')
-                                )
+                throw new Error(`We\'ve made a terrible mistake! Head: ${(this.head !== null ? this.head.toString() : 'null')} , tail: ${(this.tail !== null ? this.tail.toString() : 'null')}`);
             } else {
                 // nextElement points to the object behind
                 //  which the new element should be added.
@@ -303,11 +303,7 @@ const LinkedList = class {
                 this.tail = newElement;
                 this.size++;
             } else if ((this.tail === null && this.head !== null) || (this.head === null && this.tail !== null)) {
-                throw new Error('We\'ve made a terrible mistake! Head: ' +
-                                    (this.head !== null ? this.head.toString() : 'null') +
-                                ', tail: ' +
-                                    (this.tail !== null ? this.tail.toString() : 'null')
-                                )
+                throw new Error(`We\'ve made a terrible mistake! Head: ${(this.head !== null ? this.head.toString() : 'null')} , tail: ${(this.tail !== null ? this.tail.toString() : 'null')}`);
             } else {
                 // Insert the new element at the end of the list.
                 prevElement = this.tail;
@@ -326,8 +322,8 @@ const LinkedList = class {
 
     /**
      * Searches the list for an element with a certain value.
-     * @param {Object} value The value to search for.
-     * @return {Object} The first found element's value. <code>null</code> otherwise.
+     * @param {*} value - The value to search for.
+     * @returns {*} - The first found element's value. `null` otherwise.
      */
     contains (value) {
         if (value === null || typeof value === 'undefined') {
@@ -342,10 +338,11 @@ const LinkedList = class {
 
     /**
      * Returns the value of an element at a certain position.
-     * @param {Integer} index The position to look at.
-     * @return {Object} The found value. Null otherwise.
-     * @throws IndexOutOfBoundsException if the passed index
-     *         is not within the bounds of the list.
+     * @param {!number} index - The position to look at.
+     * @returns {*} - The found value. `null` otherwise.
+     * @throws {Error} - If the passed index is not within the bounds of the list.
+     * @throws {TypeError} - If the index is `null`.
+     * @returns {void}
      */
     get (index) {
         if (typeof index !== 'number') {
@@ -365,7 +362,7 @@ const LinkedList = class {
 
     /**
      * Returns the current head's value (first element) of the list
-     * @return {Object} The head's value (first element) of the list
+     * @returns {*} - The head's value (first element) of the list
      */
     getHead () {
         if (this.head !== null) {
@@ -376,7 +373,7 @@ const LinkedList = class {
 
     /**
      * Returns the list's size.
-     * @return {Integer} The list's size.
+     * @returns {number} - The list's size.
      */
     getSize () {
         return this.size;
@@ -384,7 +381,7 @@ const LinkedList = class {
 
     /**
      * Returns the current tail's value (last element) of the list
-     * @return {Object} The tail's value (last element) of the list
+     * @returns {*} - The tail's value (last element) of the list
      */
     getTail () {
         if (this.tail !== null) {
@@ -395,8 +392,9 @@ const LinkedList = class {
 
     /**
      * Returns the index of the first found element with a certain value.
-     * @param {Object} value The value to search for.
-     * @return {Integer} The position of the found element. -1 otherwise.
+     * @param {*} value - The value to search for.
+     * @returns {number} - The position of the found element. -1 otherwise.
+     * @throws {TypeError} - If the value is `null` or `undefined`.
      */
     indexOf (value) {
         if (value === null || typeof value === 'undefined') {
@@ -420,9 +418,9 @@ const LinkedList = class {
     /**
      * An iterator for the double-linked list with the
      * help of generators.
-     * @return {ListIterator} The new generator as iterator.
+     * @returns {ListIterator} - The new generator as iterator.
      */
-     * iterator () {
+    * iterator () {
         let currentElement = this.head;
         let atHead = true;
         // needs to check if currentElement is null
@@ -440,19 +438,19 @@ const LinkedList = class {
 
     /**
      * Removes an element at a certain position from the list.
-     * @param index The position to look at or the value to find.
-     * @return The removed element's value. null otherwise.
-     * @throws IndexOutOfBoundsException if the passed index
-     *         is not within the bounds of the list.
+     * @param {!(string|number)} arg - The position to look at or the value to find.
+     * @returns {*} - The removed element's value. `null` otherwise.
+     * @throws {Error} - If the passed index is not within the bounds of the list.
+     * @throws {TypeError} - If the argument is not a `string` or a `number`.
      */
     remove (arg) {
         if (typeof arg === 'string') {
             const value = arg;
             const element = this.getFirstElement(value);
             if (element !== null) {
-                const value = element.getValue();
+                const val = element.getValue();
                 this.removeElement(element);
-                return value;
+                return val;
             }
             return null;
         } else if (typeof arg === 'number') {
@@ -471,43 +469,43 @@ const LinkedList = class {
 
     /**
      * Returns the whole list as a readable string, enclosed by brackets.
-     * @return {String} The whole list enclosed by brackets.
+     * @returns {string} - The whole list enclosed by brackets.
      */
     toString () {
-       let index = this.head;
-       let output = '[ ';
-       let seperator = ', ';
+        let index = this.head;
+        let output = '[ ';
+        let seperator = ', ';
 
-       while (index !== null) {
-           if (index.getNext() === null) {
-               seperator = '';
-           }
-           output += index.getValue() + seperator;
-           index = index.getNext();
-       }
-       return output + " ]";
+        while (index !== null) {
+            if (index.getNext() === null) {
+                seperator = '';
+            }
+            output += index.getValue() + seperator;
+            index = index.getNext();
+        }
+        return `${output} ]`;
     }
 
     /**
      * Returns the whole list as a detailed string, enclosed by brackets.
-     * @return The whole list enclosed by brackets.
+     * @returns {string} - The whole list enclosed by brackets.
      */
     toDetailedString () {
         let index = this.head;
-        let output = "[ ";
-        let seperator = ", ";
+        let output = '[ ';
+        let seperator = ', ';
 
         while (index !== null) {
-           if (index.getNext() === null) {
-               seperator = "";
-           }
-           output += (index.getPrev() || 'null').toString()
-                     + '<-*'
-                     + (index.getValue() || 'null').toString()
-                     + '*->' +
-                     + (index.getNext() || 'null').toString()
-                     + seperator;
-           index = index.getNext();
+            if (index.getNext() === null) {
+                seperator = '';
+            }
+            output += (index.getPrev() || 'null').toString()
+                   + '<-*'
+                   + (index.getValue() || 'null').toString()
+                   + '*->' +
+                   + (index.getNext() || 'null').toString()
+                   + seperator;
+            index = index.getNext();
         }
         return `${output} ]`;
     }
