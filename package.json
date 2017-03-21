@@ -24,5 +24,5 @@
     "types": "jsdoc --verbose --pedantic --configure jsdoc.json src/"
   },
   "types": "typings/types.d.ts",
-  "version": "1.0.1"
+  "version": "1.1.0"
 }
