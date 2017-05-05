@@ -1,5 +1,7 @@
 ## DoubleLinkedList.js
 
+![build status](https://api.travis-ci.org/ffflorian/DoubleLinkedList.js.svg?branch=master)
+
 A linked list in which every element knows about its predecessor and its successor.
 ```
  ______     ______     ______
