@@ -1,5 +1,7 @@
 ## DoubleLinkedList.js
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/ffflorian/DoubleLinkedList.js.svg)](https://greenkeeper.io/)
+
 ![build status](https://api.travis-ci.org/ffflorian/DoubleLinkedList.js.svg?branch=master)
 
 A linked list in which every element knows about its predecessor and its successor.
