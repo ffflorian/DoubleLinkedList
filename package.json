@@ -6,7 +6,7 @@
   "description": "JavaScript implementation of a double-linked list",
   "devDependencies": {
     "jasmine": "^2.5.3",
-    "jasmine-console-reporter": "^1.2.7",
+    "jasmine-console-reporter": "^2.0.1",
     "jsdoc": "^3.4.3",
     "tsd-jsdoc": "dcodeio/tsd-jsdoc#fe76c4dc071b00bb549d3af7a3bad8c555999e81"
   },
