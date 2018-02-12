@@ -25,5 +25,5 @@
     "test": "yarn dist && jasmine --config=spec/support/jasmine.json"
   },
   "types": "dist/DoubleLinkedList.d.ts",
-  "version": "2.0.0"
+  "version": "2.0.1"
 }
