@@ -12,7 +12,7 @@ A linked list in which every element knows about its predecessor and its success
 ### Usage
 
 ```ts
-import {LinkedList} from 'DoubleLinkedList';
+import {LinkedList} from '@ffflorian/doublelinkedlist';
 
 const list = new LinkedList();
 list.add('one');

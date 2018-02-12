@@ -16,7 +16,7 @@
   ],
   "license": "MIT",
   "main": "dist/DoubleLinkedList.js",
-  "name": "doublelinkedlist",
+  "name": "@ffflorian/doublelinkedlist",
   "repository": "https://github.com/ffflorian/DoubleLinkedList.git",
   "scripts": {
     "clear": "rimraf dist",
