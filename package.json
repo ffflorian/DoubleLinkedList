@@ -1,28 +1,29 @@
 {
   "author": "@ffflorian",
-  "bugs": {
-    "url": "https://github.com/ffflorian/DoubleLinkedList.js/issues"
-  },
   "description": "JavaScript implementation of a double-linked list",
+  "dependencies": {
+    "@types/node": "9.4.5"
+  },
   "devDependencies": {
-    "jasmine": "^3.0.0",
-    "jasmine-console-reporter": "^2.0.1",
-    "jsdoc": "^3.4.3",
-    "tsd-jsdoc": "dcodeio/tsd-jsdoc#fe76c4dc071b00bb549d3af7a3bad8c555999e81"
+    "jasmine": "3.0.0",
+    "jasmine-console-reporter": "2.0.1",
+    "prettier": "1.10.2",
+    "rimraf": "2.6.2",
+    "typescript": "2.7.1"
   },
-  "homepage": "https://github.com/ffflorian/DoubleLinkedList.js#readme",
+  "files":[
+    "dist"
+  ],
   "license": "MIT",
-  "main": "src/DoubleLinkedList.js",
-  "name": "DoubleLinkedList.js",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/ffflorian/DoubleLinkedList.js.git"
-  },
+  "main": "dist/DoubleLinkedList.js",
+  "name": "doublelinkedlist",
+  "repository": "https://github.com/ffflorian/DoubleLinkedList.git",
   "scripts": {
-    "start": "npm run test",
-    "test": "jasmine spec/*.js",
-    "types": "jsdoc --verbose --pedantic --configure jsdoc.json src/"
+    "clear": "rimraf dist",
+    "dist": "tsc",
+    "prettier": "prettier --single-quote --write src/*.ts spec/*.js",
+    "test": "yarn dist && jasmine --config=spec/support/jasmine.json"
   },
-  "types": "typings/types.d.ts",
+  "types": "dist/DoubleLinkedList.d.ts",
   "version": "1.1.0"
 }
