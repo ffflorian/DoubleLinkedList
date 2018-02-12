@@ -1,8 +1,4 @@
-## DoubleLinkedList.js
-
-[![Greenkeeper badge](https://badges.greenkeeper.io/ffflorian/DoubleLinkedList.js.svg)](https://greenkeeper.io/)
-
-![build status](https://api.travis-ci.org/ffflorian/DoubleLinkedList.js.svg?branch=master)
+## DoubleLinkedList [![Greenkeeper badge](https://badges.greenkeeper.io/ffflorian/DoubleLinkedList.js.svg)](https://greenkeeper.io/) ![build status](https://api.travis-ci.org/ffflorian/DoubleLinkedList.js.svg?branch=master)
 
 A linked list in which every element knows about its predecessor and its successor.
 ```
@@ -15,10 +11,8 @@ A linked list in which every element knows about its predecessor and its success
 
 ### Usage
 
-```js
-'use strict';
-
-const { LinkedList } = require('./DoubleLinkedList');
+```ts
+import {LinkedList} from 'DoubleLinkedList';
 
 const list = new LinkedList();
 list.add('one');
@@ -30,11 +24,11 @@ list.get(0); // 'one'
 ### Testing
 
 First, install the npm packages for testing:
-```bash
-$ npm install
+```
+$ yarn
 ```
 
 Now run the tests:
-```bash
-$ npm test
+```
+$ yarn test
 ```
