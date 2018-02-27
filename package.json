@@ -5,7 +5,7 @@
     "@types/node": "9.4.5"
   },
   "devDependencies": {
-    "jasmine": "3.0.0",
+    "jasmine": "3.1.0",
     "jasmine-console-reporter": "2.0.1",
     "prettier": "1.10.2",
     "rimraf": "2.6.2",
