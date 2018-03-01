@@ -9,7 +9,7 @@
 
 // @ts-check
 
-const { ListElement, LinkedList } = require('../dist/DoubleLinkedList');
+const { ListElement, LinkedList } = require('../');
 
 describe('ListElement', () => {
   it('has a value', () => {
