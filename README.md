@@ -1,4 +1,4 @@
-## DoubleLinkedList [![Greenkeeper badge](https://badges.greenkeeper.io/ffflorian/DoubleLinkedList.js.svg)](https://greenkeeper.io/) ![build status](https://api.travis-ci.org/ffflorian/DoubleLinkedList.js.svg?branch=master)
+## DoubleLinkedList [![Dependabot badge](https://img.shields.io/badge/Dependabot-active-brightgreen.svg)](https://dependabot.com/)
 
 A linked list in which every element knows about its predecessor and its successor.
 ```
