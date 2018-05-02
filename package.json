@@ -2,7 +2,7 @@
   "author": "@ffflorian",
   "description": "JavaScript implementation of a double-linked list",
   "dependencies": {
-    "@types/node": "9.6.5"
+    "@types/node": "10.0.2"
   },
   "devDependencies": {
     "jasmine": "3.1.0",
@@ -10,7 +10,7 @@
     "rimraf": "2.6.2",
     "typescript": "2.8.3"
   },
-  "files":[
+  "files": [
     "dist"
   ],
   "license": "MIT",
