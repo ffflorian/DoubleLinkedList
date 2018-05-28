@@ -20,7 +20,7 @@
   "scripts": {
     "clear": "rimraf dist",
     "dist": "tsc",
-    "prettier": "prettier --single-quote --write src/*.ts spec/*.js",
+    "prettier": "prettier --write src/*.ts spec/*.js",
     "test": "yarn dist && jasmine --config=spec/support/jasmine.json"
   },
   "types": "dist/DoubleLinkedList.d.ts",
