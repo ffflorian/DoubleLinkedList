@@ -2,7 +2,7 @@
   "author": "@ffflorian",
   "description": "JavaScript implementation of a double-linked list",
   "dependencies": {
-    "@types/node": "10.5.6"
+    "@types/node": "10.5.8"
   },
   "devDependencies": {
     "jasmine": "3.1.0",
