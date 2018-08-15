@@ -1,4 +1,4 @@
-## DoubleLinkedList [![Dependabot badge](https://img.shields.io/badge/Dependabot-active-brightgreen.svg)](https://dependabot.com/)
+## DoubleLinkedList [![Dependabot Status](https://api.dependabot.com/badges/status?host=github&repo=ffflorian/double-linked-list)](https://dependabot.com)
 
 A linked list in which every element knows about its predecessor and its successor.
 ```
