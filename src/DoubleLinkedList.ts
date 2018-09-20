@@ -41,7 +41,7 @@ class LinkedList {
    */
   getElementAtIndex(index: number): ListElement | null {
     if (typeof index !== 'number') {
-      throw new TypeError('Invalid argument!');
+      throw new TypeError('Invalid argument.');
     }
     let element = this.head;
     for (let i = 1; i <= index; i++) {
@@ -88,7 +88,7 @@ class LinkedList {
    */
   removeElement(element: ListElement): void {
     if (!(element instanceof ListElement)) {
-      throw new TypeError('Invalid next element!');
+      throw new TypeError('Invalid next element.');
     }
     const prevElement = element.getPrev();
     const nextElement = element.getNext();
@@ -130,7 +130,7 @@ class LinkedList {
 
     if (index) {
       if (index < 0 || index >= this.getSize()) {
-        throw new Error(`Index ${index} is out of bounds!`);
+        throw new Error(`Index ${index} is out of bounds.`);
       }
 
       if (this.tail === null && this.head === null) {
@@ -213,7 +213,7 @@ class LinkedList {
    */
   contains(value: ListElementValue) {
     if (value === null || typeof value === 'undefined') {
-      throw new TypeError('Invalid argument!');
+      throw new TypeError('Invalid argument.');
     }
     const firstElement = this.getFirstElement(value);
     if (firstElement !== null) {
@@ -231,11 +231,11 @@ class LinkedList {
    */
   get(index: number) {
     if (typeof index !== 'number') {
-      throw new TypeError('Invalid index type!');
+      throw new TypeError('Invalid index type.');
     }
 
     if (index < 0 || index >= this.getSize()) {
-      throw new Error(`Index ${index} is out of bounds!`);
+      throw new Error(`Index ${index} is out of bounds.`);
     }
 
     const elementAtIndex = this.getElementAtIndex(index);
@@ -274,7 +274,7 @@ class LinkedList {
    */
   indexOf(value: ListElementValue) {
     if (value === null || typeof value === 'undefined') {
-      throw new TypeError('Invalid argument!');
+      throw new TypeError('Invalid argument.');
     }
     let index = -1;
     let element = this.head;
@@ -332,7 +332,7 @@ class LinkedList {
     } else if (typeof position === 'number') {
       const index = position;
       if (index < 0 || index >= this.getSize()) {
-        throw new Error(`Index ${index} is out of bounds!`);
+        throw new Error(`Index ${index} is out of bounds.`);
       }
       let element = this.getElementAtIndex(index);
       const value = element !== null ? element.getValue() : '';
@@ -342,7 +342,7 @@ class LinkedList {
       return value;
     }
 
-    throw new TypeError('Invalid argument!');
+    throw new TypeError('Invalid argument.');
   }
 
   /** Returns the whole list as a readable string, enclosed by brackets. */

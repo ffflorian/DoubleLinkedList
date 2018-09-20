@@ -17,7 +17,7 @@ export class ListElement {
 
   constructor(private value: ListElementValue) {
     if (value === null || typeof value === 'undefined') {
-      throw new TypeError('Invalid value!');
+      throw new TypeError('Invalid value.');
     }
 
     /**
@@ -68,7 +68,7 @@ export class ListElement {
    */
   setNext(next: ListElement): void {
     if (!(next instanceof ListElement)) {
-      throw new TypeError('Invalid next element!');
+      throw new TypeError('Invalid next element.');
     }
     this.next = next;
   }
@@ -80,7 +80,7 @@ export class ListElement {
    */
   setPrev(prev: ListElement): void {
     if (!(prev instanceof ListElement)) {
-      throw new TypeError('Invalid previous element!');
+      throw new TypeError('Invalid previous element.');
     }
     this.prev = prev;
   }
@@ -92,7 +92,7 @@ export class ListElement {
    */
   setValue(value: ListElementValue): void {
     if (value === null || typeof value === 'undefined') {
-      throw new TypeError('Invalid value!');
+      throw new TypeError('Invalid value.');
     }
     this.value = value;
   }
