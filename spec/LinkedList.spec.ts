@@ -1,15 +1,4 @@
-'use strict';
-
-/**
- * Tests for double-linked list.
- *
- * Date: 2016-11-18
- * @author Florian Keller <github@floriankeller.de>
- */
-
-// @ts-check
-
-const { ListElement, LinkedList } = require('../');
+import { ListElement, LinkedList } from '../src/DoubleLinkedList';
 
 describe('ListElement', () => {
   it('has a value', () => {
@@ -23,45 +12,83 @@ describe('ListElement', () => {
     const element2 = new ListElement('two');
 
     element1.setNext(element2);
-    expect(element1.getNext().getValue()).toEqual('two');
+
+    const nextElement = element1.getNext();
+
+    if (!nextElement) {
+      return fail('No next element.');
+    }
+
+    expect(nextElement.getValue()).toEqual('two');
 
     element2.setPrev(element1);
-    expect(element2.getPrev().getValue()).toEqual('one');
+
+    const previousElement = element2.getPrev();
+
+    if (!previousElement) {
+      return fail('No previous element.');
+    }
+
+    expect(previousElement.getValue()).toEqual('one');
   });
 
   it("won't connect an invalid next element", () => {
     const element1 = new ListElement('one');
 
-    expect(() => element1.setNext('error')).toThrow(
-      new TypeError('Invalid next element!')
-    );
+    try {
+      element1.setNext('error' as any);
+      fail();
+    } catch (error) {
+      expect(error.message).toBe('Invalid next element!');
+    }
   });
 
   it("won't connect an invalid previous element", () => {
     const element1 = new ListElement('one');
 
-    expect(() => element1.setPrev('error')).toThrow(
-      new TypeError('Invalid previous element!')
-    );
+    try {
+      element1.setPrev('error' as any);
+      fail();
+    } catch (error) {
+      expect(error.message).toBe('Invalid previous element!');
+    }
   });
 
   it("won't accept an invalid value", () => {
-    expect(() => new ListElement()).toThrow(new TypeError('Invalid value!'));
-    expect(() => new ListElement(null)).toThrow(
-      new TypeError('Invalid value!')
-    );
+    try {
+      new (ListElement as any)();
+      fail();
+    } catch (error) {
+      expect(error.message).toBe('Invalid value!');
+    }
+
+    try {
+      new ListElement(null as any);
+      fail();
+    } catch (error) {
+      expect(error.message).toBe('Invalid value!');
+    }
 
     const element1 = new ListElement('');
 
-    expect(() => element1.setValue()).toThrow(new TypeError('Invalid value!'));
-    expect(() => element1.setValue(null)).toThrow(
-      new TypeError('Invalid value!')
-    );
+    try {
+      element1.setValue(undefined as any);
+      fail();
+    } catch (error) {
+      expect(error.message).toBe('Invalid value!');
+    }
+
+    try {
+      element1.setValue(null as any);
+      fail();
+    } catch (error) {
+      expect(error.message).toBe('Invalid value!');
+    }
   });
 });
 
 describe('LinkedList', () => {
-  let list;
+  let list: LinkedList;
 
   beforeEach(() => {
     list = new LinkedList();
@@ -103,14 +130,28 @@ describe('LinkedList', () => {
   });
 
   it("won't go outside the list's bounds", () => {
-    expect(() => list.get(0)).toThrow(new Error('Index 0 is out of bounds!'));
+    try {
+      list.get(0);
+      fail();
+    } catch (error) {
+      expect(error.message).toBe('Index 0 is out of bounds!');
+    }
 
     list.add('zero');
 
-    expect(() => list.get(2)).toThrow(new Error('Index 2 is out of bounds!'));
-    expect(() => list.remove(2)).toThrow(
-      new Error('Index 2 is out of bounds!')
-    );
+    try {
+      list.get(2);
+      fail();
+    } catch (error) {
+      expect(error.message).toBe('Index 2 is out of bounds!');
+    }
+
+    try {
+      list.remove(2);
+      fail();
+    } catch (error) {
+      expect(error.message).toBe('Index 2 is out of bounds!');
+    }
   });
 
   it("gets the list's head and tail", () => {
@@ -157,7 +198,7 @@ describe('LinkedList', () => {
   });
 
   it('iterates with next over the list', () => {
-    let iterator = list.iterator();
+    const iterator = list.iterator();
 
     list.add('zero');
     list.add('one');

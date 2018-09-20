@@ -5,9 +5,11 @@
     "@types/node": "10.9.4"
   },
   "devDependencies": {
+    "@types/jasmine": "2.8.8",
     "jasmine": "3.2.0",
     "prettier": "1.14.2",
     "rimraf": "2.6.2",
+    "ts-node": "7.0.1",
     "typescript": "3.0.3"
   },
   "files": [
@@ -20,8 +22,8 @@
   "scripts": {
     "clear": "rimraf dist",
     "dist": "tsc",
-    "prettier": "prettier --write src/*.ts spec/*.js",
-    "test": "yarn dist && jasmine --config=spec/support/jasmine.json"
+    "prettier": "prettier --ignore-path .gitignore --write \"**/*.ts\"",
+    "test": "ts-node -P tsconfig.jasmine.json node_modules/.bin/jasmine"
   },
   "types": "dist/DoubleLinkedList.d.ts",
   "version": "2.0.1"
