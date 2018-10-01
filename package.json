@@ -2,7 +2,7 @@
   "author": "Florian Keller <github@floriankeller.de>",
   "description": "JavaScript implementation of a double-linked list",
   "dependencies": {
-    "@types/node": "10.11.2"
+    "@types/node": "10.11.3"
   },
   "devDependencies": {
     "@types/jasmine": "2.8.8",
