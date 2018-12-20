@@ -153,10 +153,10 @@ class LinkedList {
       } else {
         // nextElement points to the object behind
         //  which the new element should be added.
-        let nextElement = this.getElementAtIndex(index);
+        const nextElement = this.getElementAtIndex(index);
         // prevElement points to the position
         // behind which the new element should be added.
-        let prevElement = nextElement !== null ? nextElement.getPrev() : null;
+        const prevElement = nextElement !== null ? nextElement.getPrev() : null;
 
         // Insert the new element between prev and next.
         if (prevElement !== null) {
@@ -334,7 +334,7 @@ class LinkedList {
       if (index < 0 || index >= this.getSize()) {
         throw new Error(`Index ${index} is out of bounds.`);
       }
-      let element = this.getElementAtIndex(index);
+      const element = this.getElementAtIndex(index);
       const value = element !== null ? element.getValue() : '';
       if (element !== null) {
         this.removeElement(element);
