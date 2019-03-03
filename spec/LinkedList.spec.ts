@@ -1,4 +1,4 @@
-import { ListElement, LinkedList } from '../src/';
+import {ListElement, LinkedList} from '../src/';
 
 describe('ListElement', () => {
   it('has a value', () => {

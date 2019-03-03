@@ -25,10 +25,10 @@ list.get(0); // 'one'
 
 First, install the npm packages for testing:
 ```
-$ yarn
+yarn
 ```
 
 Now run the tests:
 ```
-$ yarn test
+yarn test
 ```

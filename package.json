@@ -1,6 +1,6 @@
 {
   "author": "Florian Keller <github@floriankeller.de>",
-  "description": "JavaScript implementation of a double-linked list",
+  "description": "TypeScript implementation of a double-linked list",
   "dependencies": {
     "@types/node": "11.9.0"
   },
@@ -31,6 +31,5 @@
     "prettier": "prettier --ignore-path .gitignore --write \"**/*.ts\"",
     "test": "ts-node -P tsconfig.jasmine.json node_modules/.bin/jasmine"
   },
-  "types": "dist/index.d.ts",
   "version": "2.0.1"
 }

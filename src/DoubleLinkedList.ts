@@ -1,4 +1,4 @@
-import { ListElement, ListElementValue } from './ListElement';
+import {ListElement, ListElementValue} from './ListElement';
 
 /**
  * The linked list. By default the head and the tail are set to `null` since they don't exist yet.
@@ -140,15 +140,12 @@ class LinkedList {
         this.head = newElement;
         this.tail = newElement;
         this.size++;
-      } else if (
-        (this.tail === null && this.head !== null) ||
-        (this.head === null && this.tail !== null)
-      ) {
+      } else if ((this.tail === null && this.head !== null) || (this.head === null && this.tail !== null)) {
         // Something went wrong and they are not both null.
         throw new Error(
-          `We\'ve made a terrible mistake! Head: ${
-            this.head !== null ? this.head.toString() : 'null'
-          } , tail: ${this.tail !== null ? this.tail.toString() : 'null'}`
+          `We\'ve made a terrible mistake! Head: ${this.head !== null ? this.head.toString() : 'null'} , tail: ${
+            this.tail !== null ? this.tail.toString() : 'null'
+          }`
         );
       } else {
         // nextElement points to the object behind
@@ -182,14 +179,11 @@ class LinkedList {
         this.head = newElement;
         this.tail = newElement;
         this.size++;
-      } else if (
-        (this.tail === null && this.head !== null) ||
-        (this.head === null && this.tail !== null)
-      ) {
+      } else if ((this.tail === null && this.head !== null) || (this.head === null && this.tail !== null)) {
         throw new Error(
-          `We\'ve made a terrible mistake! Head: ${
-            this.head !== null ? this.head.toString() : 'null'
-          } , tail: ${this.tail !== null ? this.tail.toString() : 'null'}`
+          `We\'ve made a terrible mistake! Head: ${this.head !== null ? this.head.toString() : 'null'} , tail: ${
+            this.tail !== null ? this.tail.toString() : 'null'
+          }`
         );
       } else {
         // Insert the new element at the end of the list.
@@ -384,4 +378,4 @@ class LinkedList {
   }
 }
 
-export { ListElement, LinkedList };
+export {ListElement, LinkedList};
