@@ -1,20 +1,15 @@
-/**
- * A single element in a double-linked list.
- *
- * Date: 2016-11-18
- * @author Florian Keller <github@floriankeller.de>
- */
-
-export type ListElementValue = string | number | object;
+type ListElementValue = string | number | object;
 
 /**
  * A list element. By default the head and the tail are set to `null` since they don't exist yet.
- * @param value The value to set.
  */
-export class ListElement {
+class ListElement {
   private prev: ListElement | null;
   private next: ListElement | null;
 
+  /**
+   * @param value The value which the element should contain.
+   */
   constructor(private value: ListElementValue) {
     if (value === null || typeof value === 'undefined') {
       throw new TypeError('Invalid value.');
@@ -39,11 +34,6 @@ export class ListElement {
      * current      next
      */
     this.next = null;
-
-    /**
-     * The value which the element should contain.
-     */
-    this.value = value;
   }
 
   /** Returns the next element. `null` otherwise. */
@@ -102,3 +92,5 @@ export class ListElement {
     return `[ ${this.getValue()} ]`;
   }
 }
+
+export {ListElement, ListElementValue}
