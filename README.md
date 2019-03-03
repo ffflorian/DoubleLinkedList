@@ -1,4 +1,4 @@
-## DoubleLinkedList [![Dependabot Status](https://api.dependabot.com/badges/status?host=github&repo=ffflorian/DoubleLinkedList)](https://dependabot.com)
+## DoubleLinkedList [![npm version](https://img.shields.io/npm/v/@ffflorian/doublelinkedlist.svg?style=flat)](https://www.npmjs.com/package/@ffflorian/doublelinkedlist) [![Dependabot Status](https://api.dependabot.com/badges/status?host=github&repo=ffflorian/DoubleLinkedList)](https://dependabot.com)
 
 A linked list in which every element knows about its predecessor and its successor.
 ```
