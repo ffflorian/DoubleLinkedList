@@ -93,4 +93,4 @@ class ListElement {
   }
 }
 
-export {ListElement, ListElementValue}
+export {ListElement, ListElementValue};
