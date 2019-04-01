@@ -365,6 +365,7 @@ class LinkedList {
       if (index.getNext() === null) {
         seperator = '';
       }
+      /* tslint:disable:prefer-template */
       output +=
         (index.getPrev() || 'null').toString() +
         '<-*' +

@@ -1,4 +1,4 @@
-import {ListElement, LinkedList} from '../src/';
+import {LinkedList, ListElement} from '../src/';
 
 describe('ListElement', () => {
   it('has a value', () => {
@@ -220,7 +220,7 @@ describe('LinkedList', () => {
     list.add('two');
     list.add('three');
 
-    for (let element of list.iterator()) {
+    for (const element of list.iterator()) {
       str += element;
     }
 
