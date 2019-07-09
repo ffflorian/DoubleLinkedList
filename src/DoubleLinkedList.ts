@@ -205,7 +205,7 @@ class LinkedList {
    * @param value The value to search for.
    * @returns The first found element's value. `null` otherwise.
    */
-  contains(value: ListElementValue) {
+  contains(value: ListElementValue): ListElementValue {
     if (value === null || typeof value === 'undefined') {
       throw new TypeError('Invalid argument.');
     }
@@ -223,7 +223,7 @@ class LinkedList {
    * @throws `Error` if the passed index is not within the bounds of the list.
    * @throws `TypeError` if the index is `null`.
    */
-  get(index: number) {
+  get(index: number): ListElementValue {
     if (typeof index !== 'number') {
       throw new TypeError('Invalid index type.');
     }
@@ -240,7 +240,7 @@ class LinkedList {
   }
 
   /** Returns the current head's value (first element) of the list */
-  getHead() {
+  getHead(): ListElementValue {
     if (this.head !== null) {
       return this.head.getValue();
     }
@@ -248,12 +248,12 @@ class LinkedList {
   }
 
   /** Returns the list's size. */
-  getSize() {
+  getSize(): number {
     return this.size;
   }
 
   /** Returns the current tail's value (last element) of the list. */
-  getTail() {
+  getTail(): ListElementValue {
     if (this.tail !== null) {
       return this.tail.getValue();
     }
@@ -266,7 +266,7 @@ class LinkedList {
    * @returns The position of the found element. -1 otherwise.
    * @throws `TypeError` if the value is `null` or `undefined`.
    */
-  indexOf(value: ListElementValue) {
+  indexOf(value: ListElementValue): number {
     if (value === null || typeof value === 'undefined') {
       throw new TypeError('Invalid argument.');
     }
@@ -290,7 +290,7 @@ class LinkedList {
    * help of generators.
    * @returns The new generator as iterator.
    */
-  *iterator() {
+  *iterator(): IterableIterator<ListElementValue> {
     let currentElement = this.head;
     let atHead = true;
     // needs to check if currentElement is null
@@ -313,7 +313,7 @@ class LinkedList {
    * @throws `Error` if the passed index is not within the bounds of the list.
    * @throws `TypeError` if the argument is not a `string` or a `number`.
    */
-  remove(position: string | number) {
+  remove(position: string | number): ListElementValue {
     if (typeof position === 'string') {
       const value = position;
       const element = this.getFirstElement(value);
@@ -340,7 +340,7 @@ class LinkedList {
   }
 
   /** Returns the whole list as a readable string, enclosed by brackets. */
-  toString() {
+  toString(): string {
     let index = this.head;
     let output = '[ ';
     let separator = ', ';
@@ -356,7 +356,7 @@ class LinkedList {
   }
 
   /** Returns the whole list as a detailed string, enclosed by brackets. */
-  toDetailedString() {
+  toDetailedString(): string {
     let index = this.head;
     let output = '[ ';
     let seperator = ', ';

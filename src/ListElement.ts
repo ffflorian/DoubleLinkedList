@@ -1,4 +1,4 @@
-type ListElementValue = string | number | object;
+type ListElementValue = string | number | object | null;
 
 /**
  * A list element. By default the head and the tail are set to `null` since they don't exist yet.
@@ -47,7 +47,7 @@ class ListElement {
   }
 
   /** Returns the value. */
-  getValue() {
+  getValue(): ListElementValue {
     return this.value;
   }
 
