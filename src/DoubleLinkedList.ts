@@ -6,8 +6,8 @@ import {ListElement, ListElementValue} from './ListElement';
  */
 class LinkedList {
   private head: ListElement | null;
-  private tail: ListElement | null;
   private size: number;
+  private tail: ListElement | null;
 
   constructor() {
     /**
@@ -32,82 +32,6 @@ class LinkedList {
 
     /** The size of the list. */
     this.size = 0;
-  }
-
-  /**
-   * Returns a ListElement at a certain position.
-   * @param index The position to find the element at.
-   * @throws `TypeError` When `index` is not a number.
-   */
-  getElementAtIndex(index: number): ListElement | null {
-    if (typeof index !== 'number') {
-      throw new TypeError('Invalid argument.');
-    }
-    let element = this.head;
-    for (let i = 1; i <= index; i++) {
-      element = element !== null ? element.getNext() : null;
-    }
-    return element;
-  }
-
-  /**
-   * Returns a ListElement with a certain value.
-   * @param value The value to find in the list.
-   * @returns The first found ListElement. `null` otherwise.
-   */
-  getFirstElement(value: ListElementValue): ListElement | null {
-    let output = null;
-    let element = this.head;
-
-    for (let i = 0; i <= this.getSize(); i++) {
-      if (element !== null) {
-        if (element.getValue() === value) {
-          output = element;
-          break;
-        } else {
-          element = element !== null ? element.getNext() : null;
-        }
-      }
-    }
-    return output;
-  }
-
-  /**
-   * Removes a certain ListElement from the list by
-   *  connecting the elements before and after the
-   *  old element.
-   * ```
-   * _______    _______    _______
-   * |*|**|*|   | |  | |   |*|**|*|
-   * |*|**|*<-------------->*|**|*|
-   * |_|__|_|   |_|__|_|   |_|__|_|
-   *   prev     current      next
-   * ```
-   * @param element The element to remove.
-   * @throws `TypeError` when `currentElement` is not a ListElement
-   */
-  removeElement(element: ListElement): void {
-    if (!(element instanceof ListElement)) {
-      throw new TypeError('Invalid next element.');
-    }
-    const prevElement = element.getPrev();
-    const nextElement = element.getNext();
-
-    if (prevElement !== null && nextElement !== null) {
-      prevElement.setNext(nextElement);
-    } else {
-      this.head = nextElement;
-    }
-
-    if (nextElement !== null && prevElement !== null) {
-      nextElement.setPrev(prevElement);
-    } else {
-      this.tail = prevElement;
-    }
-
-    // Set the old element to null so the garbage collector can remove it.
-    element = <any>null;
-    this.size--;
   }
 
   /**
@@ -239,6 +163,44 @@ class LinkedList {
     return null;
   }
 
+  /**
+   * Returns a ListElement at a certain position.
+   * @param index The position to find the element at.
+   * @throws `TypeError` When `index` is not a number.
+   */
+  getElementAtIndex(index: number): ListElement | null {
+    if (typeof index !== 'number') {
+      throw new TypeError('Invalid argument.');
+    }
+    let element = this.head;
+    for (let i = 1; i <= index; i++) {
+      element = element !== null ? element.getNext() : null;
+    }
+    return element;
+  }
+
+  /**
+   * Returns a ListElement with a certain value.
+   * @param value The value to find in the list.
+   * @returns The first found ListElement. `null` otherwise.
+   */
+  getFirstElement(value: ListElementValue): ListElement | null {
+    let output = null;
+    let element = this.head;
+
+    for (let i = 0; i <= this.getSize(); i++) {
+      if (element !== null) {
+        if (element.getValue() === value) {
+          output = element;
+          break;
+        } else {
+          element = element !== null ? element.getNext() : null;
+        }
+      }
+    }
+    return output;
+  }
+
   /** Returns the current head's value (first element) of the list */
   getHead(): ListElementValue {
     if (this.head !== null) {
@@ -339,20 +301,42 @@ class LinkedList {
     throw new TypeError('Invalid argument.');
   }
 
-  /** Returns the whole list as a readable string, enclosed by brackets. */
-  toString(): string {
-    let index = this.head;
-    let output = '[ ';
-    let separator = ', ';
-
-    while (index !== null) {
-      if (index.getNext() === null) {
-        separator = '';
-      }
-      output += index.getValue() + separator;
-      index = index.getNext();
+  /**
+   * Removes a certain ListElement from the list by
+   *  connecting the elements before and after the
+   *  old element.
+   * ```
+   * _______    _______    _______
+   * |*|**|*|   | |  | |   |*|**|*|
+   * |*|**|*<-------------->*|**|*|
+   * |_|__|_|   |_|__|_|   |_|__|_|
+   *   prev     current      next
+   * ```
+   * @param element The element to remove.
+   * @throws `TypeError` when `currentElement` is not a ListElement
+   */
+  removeElement(element: ListElement): void {
+    if (!(element instanceof ListElement)) {
+      throw new TypeError('Invalid next element.');
     }
-    return `${output} ]`;
+    const prevElement = element.getPrev();
+    const nextElement = element.getNext();
+
+    if (prevElement !== null && nextElement !== null) {
+      prevElement.setNext(nextElement);
+    } else {
+      this.head = nextElement;
+    }
+
+    if (nextElement !== null && prevElement !== null) {
+      nextElement.setPrev(prevElement);
+    } else {
+      this.tail = prevElement;
+    }
+
+    // Set the old element to null so the garbage collector can remove it.
+    element = <any>null;
+    this.size--;
   }
 
   /** Returns the whole list as a detailed string, enclosed by brackets. */
@@ -373,6 +357,22 @@ class LinkedList {
         '*->' +
         +(index.getNext() || 'null').toString() +
         seperator;
+      index = index.getNext();
+    }
+    return `${output} ]`;
+  }
+
+  /** Returns the whole list as a readable string, enclosed by brackets. */
+  toString(): string {
+    let index = this.head;
+    let output = '[ ';
+    let separator = ', ';
+
+    while (index !== null) {
+      if (index.getNext() === null) {
+        separator = '';
+      }
+      output += index.getValue() + separator;
       index = index.getNext();
     }
     return `${output} ]`;
