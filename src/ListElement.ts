@@ -4,8 +4,8 @@ type ListElementValue = string | number | object | null;
  * A list element. By default the head and the tail are set to `null` since they don't exist yet.
  */
 class ListElement {
-  private prev: ListElement | null;
   private next: ListElement | null;
+  private prev: ListElement | null;
 
   /**
    * @param value The value which the element should contain.
