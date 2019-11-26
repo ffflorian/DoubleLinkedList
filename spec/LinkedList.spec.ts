@@ -63,7 +63,7 @@ describe('ListElement', () => {
     }
 
     try {
-      new ListElement(null as any);
+      new ListElement(null);
       fail();
     } catch (error) {
       expect(error.message).toBe('Invalid value.');
@@ -79,7 +79,7 @@ describe('ListElement', () => {
     }
 
     try {
-      element1.setValue(null as any);
+      element1.setValue(null);
       fail();
     } catch (error) {
       expect(error.message).toBe('Invalid value.');
