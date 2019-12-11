@@ -19,6 +19,7 @@
     "tslint": "5.20.1",
     "tslint-config-prettier": "1.18.0",
     "tslint-plugin-prettier": "2.0.1",
+    "typedoc": "0.15.4",
     "typescript": "3.7.3"
   },
   "files": [
@@ -52,9 +53,10 @@
     "extends": "@ffflorian/semantic-release-config"
   },
   "scripts": {
-    "build": "tsc",
+    "build:ts": "tsc",
+    "build:docs": "typedoc",
     "clean": "rimraf dist",
-    "dist": "yarn clean && yarn build",
+    "dist": "yarn clean && yarn build:ts",
     "flatten": "publish-flat -o flattened",
     "fix": "yarn fix:other && yarn fix:ts",
     "fix:other": "yarn prettier --write",
