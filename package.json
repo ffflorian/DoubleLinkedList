@@ -3,13 +3,17 @@
   "description": "TypeScript implementation of a double-linked list",
   "devDependencies": {
     "@ffflorian/prettier-config": "0.0.5",
+    "@ffflorian/semantic-release-config": "0.1.4",
     "@ffflorian/tslint-config": "0.7.0",
+    "@semantic-release/changelog": "3.0.6",
+    "@semantic-release/git": "7.0.18",
     "@types/jasmine": "3.5.0",
     "husky": "3.1.0",
     "jasmine": "3.5.0",
     "lint-staged": "9.5.0",
     "prettier": "1.19.1",
     "rimraf": "3.0.0",
+    "semantic-release": "15.13.31",
     "ts-node": "8.5.4",
     "tslint": "5.20.1",
     "tslint-config-prettier": "1.18.0",
@@ -27,7 +31,7 @@
   },
   "license": "GPL-3.0",
   "lint-staged": {
-    "*.{json,md}": [
+    "*.{json,md,yml}": [
       "prettier --write",
       "git add"
     ],
@@ -44,11 +48,15 @@
   "name": "@ffflorian/doublelinkedlist",
   "prettier": "@ffflorian/prettier-config",
   "repository": "https://github.com/ffflorian/DoubleLinkedList.git",
+  "release": {
+    "extends": "@ffflorian/semantic-release-config"
+  },
   "scripts": {
-    "build": "tsc",
+    "build:ts": "tsc",
     "build:docs": "typedoc",
-    "clear": "rimraf dist",
-    "dist": "yarn clear && yarn build",
+    "clean": "rimraf dist",
+    "dist": "yarn clean && yarn build:ts",
+    "flatten": "publish-flat -o flattened",
     "fix": "yarn fix:other && yarn fix:ts",
     "fix:other": "yarn prettier --write",
     "fix:ts": "yarn lint:ts --fix && yarn lint:ts:spec --fix",
@@ -56,7 +64,9 @@
     "lint:other": "yarn prettier --list-different",
     "lint:ts": "tslint --project tsconfig.json",
     "lint:ts:spec": "tslint --project tsconfig.jasmine.json",
-    "prettier": "prettier --ignore-path .gitignore \"*.{json,md}\"",
+    "postversion": "node ../node_modules/publish-flat/cli-copy.js -i package.json -o ../package.json version",
+    "prettier": "prettier \"*.{json,md,yml}\"",
+    "release": "semantic-release",
     "test": "ts-node -P tsconfig.jasmine.json node_modules/.bin/jasmine"
   },
   "version": "2.0.2"
