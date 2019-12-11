@@ -4,41 +4,45 @@ import {ListElement, ListElementValue} from './ListElement';
  * The linked list. By default the head and the tail are set to `null` since they don't exist yet.
  * Also the size is set to 0 because the list doesn't contain any elements yet.
  */
-class LinkedList {
+export class LinkedList {
+  /**
+   * The current head (first element).
+   * ```
+   * _______     _______
+   * |*|**|*|   | |  | |
+   * |*|**|*<---> |  | |
+   * |_|__|_|   |_|__|_|
+   *  head       next
+   * ```
+   */
   private head: ListElement | null;
+
+  /** The size of the list. */
   private size: number;
+
+  /**
+   * The current tail (last element).
+   * ```
+   * _______     _______
+   * | |  | |   |*|**|*|
+   * | |  | <--->*|**|*|
+   * |_|__|_|   |_|__|_|
+   *   prev       tail
+   * ```
+   */
   private tail: ListElement | null;
 
   constructor() {
-    /**
-     * The current head (first element).
-     *  _______    _______
-     * |*|**|*|   | |  | |
-     * |*|**|*<---> |  | |
-     * |_|__|_|   |_|__|_|
-     *   head       next
-     */
     this.head = null;
-
-    /**
-     * The current tail (last element).
-     *  _______    _______
-     * | |  | |   |*|**|*|
-     * | |  | <--->*|**|*|
-     * |_|__|_|   |_|__|_|
-     *   prev       tail
-     */
-    this.tail = null;
-
-    /** The size of the list. */
     this.size = 0;
+    this.tail = null;
   }
 
   /**
    * Adds an element to the end of the list by inserting
    *  the new element at the end of the list.
    * ```
-   *  _______    _______    _______
+   * _______    _______    _______
    * | |  | |   | |  | |   |*|**|*|
    * | |  | <---> |  | <--->*|**|*|
    * |_|__|_|   |_|__|_|   |_|__|_|
@@ -46,8 +50,8 @@ class LinkedList {
    * ```
    * @param value The value which the element should contain.
    * @param index The index where the element should be inserted.
-   * @throws `TypeError` if the value is null.
-   * @throws `Error` If both head and tail are null.
+   * @throws `TypeError` if the value is `null`.
+   * @throws `Error` If both head and tail are `null`.
    */
   add(value: ListElementValue, index?: number): void {
     const newElement = new ListElement(value);
@@ -59,21 +63,18 @@ class LinkedList {
 
       if (this.tail === null && this.head === null) {
         // Set head and tail both to be the new element
-        //  because they don't exist yet and thus
-        //  the new element is both head and tail (empty list).
+        // because they don't exist yet and thus
+        // the new element is both head and tail (empty list).
         this.head = newElement;
         this.tail = newElement;
         this.size++;
       } else if ((this.tail === null && this.head !== null) || (this.head === null && this.tail !== null)) {
         // Something went wrong and they are not both null.
-        throw new Error(
-          `We\'ve made a terrible mistake! Head: ${this.head !== null ? this.head.toString() : 'null'} , tail: ${
-            this.tail !== null ? this.tail.toString() : 'null'
-          }`
-        );
+        const message = `We've made a terrible mistake! Head: ${String(this.head)}, tail: ${String(this.tail)}`;
+        throw new Error(message);
       } else {
         // nextElement points to the object behind
-        //  which the new element should be added.
+        // which the new element should be added.
         const nextElement = this.getElementAtIndex(index);
         // prevElement points to the position
         // behind which the new element should be added.
@@ -97,18 +98,15 @@ class LinkedList {
       let prevElement;
 
       if (this.tail === null && this.head === null) {
-        // Set head and tail both to be the new element
-        //  because they don't exist yet and thus
-        //  the new element is both head and tail.
+        // Set `head` and `tail` both to be the new element
+        // because they don't exist yet and thus
+        // the new element is both `head` and `tail`.
         this.head = newElement;
         this.tail = newElement;
         this.size++;
       } else if ((this.tail === null && this.head !== null) || (this.head === null && this.tail !== null)) {
-        throw new Error(
-          `We\'ve made a terrible mistake! Head: ${this.head !== null ? this.head.toString() : 'null'} , tail: ${
-            this.tail !== null ? this.tail.toString() : 'null'
-          }`
-        );
+        const message = `We've made a terrible mistake! Head: ${String(this.head)}, tail: ${String(this.tail)}`;
+        throw new Error(message);
       } else {
         // Insert the new element at the end of the list.
         prevElement = this.tail;
@@ -129,7 +127,7 @@ class LinkedList {
    * @param value The value to search for.
    * @returns The first found element's value. `null` otherwise.
    */
-  contains(value: ListElementValue): ListElementValue {
+  contains(value: ListElementValue): ListElementValue | null {
     if (value === null || typeof value === 'undefined') {
       throw new TypeError('Invalid argument.');
     }
@@ -147,7 +145,7 @@ class LinkedList {
    * @throws `Error` if the passed index is not within the bounds of the list.
    * @throws `TypeError` if the index is `null`.
    */
-  get(index: number): ListElementValue {
+  get(index: number): ListElementValue | null {
     if (typeof index !== 'number') {
       throw new TypeError('Invalid index type.');
     }
@@ -185,20 +183,19 @@ class LinkedList {
    * @returns The first found ListElement. `null` otherwise.
    */
   getFirstElement(value: ListElementValue): ListElement | null {
-    let output = null;
     let element = this.head;
 
     for (let i = 0; i <= this.getSize(); i++) {
       if (element !== null) {
         if (element.getValue() === value) {
-          output = element;
-          break;
+          return element;
         } else {
           element = element !== null ? element.getNext() : null;
         }
       }
     }
-    return output;
+
+    return null;
   }
 
   /** Returns the current head's value (first element) of the list */
@@ -232,8 +229,10 @@ class LinkedList {
     if (value === null || typeof value === 'undefined') {
       throw new TypeError('Invalid argument.');
     }
+
     let index = -1;
     let element = this.head;
+
     for (let i = 0; i <= this.getSize(); i++) {
       if (element !== null) {
         if (element.getValue() === value) {
@@ -244,6 +243,7 @@ class LinkedList {
         }
       }
     }
+
     return index;
   }
 
@@ -277,20 +277,18 @@ class LinkedList {
    */
   remove(position: string | number): ListElementValue {
     if (typeof position === 'string') {
-      const value = position;
-      const element = this.getFirstElement(value);
+      const element = this.getFirstElement(position);
       if (element !== null) {
-        const val = element.getValue();
+        const value = element.getValue();
         this.removeElement(element);
-        return val;
+        return value;
       }
       return null;
     } else if (typeof position === 'number') {
-      const index = position;
-      if (index < 0 || index >= this.getSize()) {
-        throw new Error(`Index ${index} is out of bounds.`);
+      if (position < 0 || position >= this.getSize()) {
+        throw new Error(`Index ${position} is out of bounds.`);
       }
-      const element = this.getElementAtIndex(index);
+      const element = this.getElementAtIndex(position);
       const value = element !== null ? element.getValue() : '';
       if (element !== null) {
         this.removeElement(element);
@@ -319,6 +317,7 @@ class LinkedList {
     if (!(element instanceof ListElement)) {
       throw new TypeError('Invalid next element.');
     }
+
     const prevElement = element.getPrev();
     const nextElement = element.getNext();
 
@@ -335,48 +334,40 @@ class LinkedList {
     }
 
     // Set the old element to null so the garbage collector can remove it.
-    element = <any>null;
+    element = null as any;
     this.size--;
   }
 
   /** Returns the whole list as a detailed string, enclosed by brackets. */
   toDetailedString(): string {
     let index = this.head;
-    let output = '[ ';
-    let seperator = ', ';
-
-    while (index !== null) {
-      if (index.getNext() === null) {
-        seperator = '';
-      }
-      /* tslint:disable:prefer-template */
-      output +=
-        (index.getPrev() || 'null').toString() +
-        '<-*' +
-        (index.getValue() || 'null').toString() +
-        '*->' +
-        +(index.getNext() || 'null').toString() +
-        seperator;
-      index = index.getNext();
-    }
-    return `${output} ]`;
-  }
-
-  /** Returns the whole list as a readable string, enclosed by brackets. */
-  toString(): string {
-    let index = this.head;
-    let output = '[ ';
+    let output = '';
     let separator = ', ';
 
     while (index !== null) {
       if (index.getNext() === null) {
         separator = '';
       }
-      output += index.getValue() + separator;
+      output += `${String(index.getPrev())}<-*${String(index.getValue())}*->${String(index.getNext())}${separator}`;
       index = index.getNext();
     }
-    return `${output} ]`;
+
+    return `[ ${output} ]`;
+  }
+
+  /** Returns the whole list as a readable string, enclosed by brackets. */
+  toString(): string {
+    let index = this.head;
+    let output = '';
+    let separator = ', ';
+
+    while (index !== null) {
+      if (index.getNext() === null) {
+        separator = '';
+      }
+      output += `${index.getValue()}${separator}`;
+      index = index.getNext();
+    }
+    return `[ ${output} ]`;
   }
 }
-
-export {ListElement, LinkedList};

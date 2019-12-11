@@ -1,10 +1,31 @@
-type ListElementValue = string | number | object | null;
+export type ListElementValue = string | number | object | null;
 
 /**
  * A list element. By default the head and the tail are set to `null` since they don't exist yet.
  */
-class ListElement {
+export class ListElement {
+  /**
+   * The next element.
+   * ```
+   * _______    _______
+   * | |  | |   |*|**|*|
+   * | |  | ---->*|**|*|
+   * |_|__|_|   |_|__|_|
+   * current      next
+   * ```
+   */
   private next: ListElement | null;
+
+  /**
+   * The previous element.
+   * ```
+   * _______     _______
+   * |*|**|*|   | |  | |
+   * |*|**|*<---- |  | |
+   * |_|__|_|   |_|__|_|
+   * previous   current
+   * ```
+   */
   private prev: ListElement | null;
 
   /**
@@ -15,25 +36,8 @@ class ListElement {
       throw new TypeError('Invalid value.');
     }
 
-    /**
-     * The previous element.
-     *  _______    _______
-     * |*|**|*|   | |  | |
-     * |*|**|*<---- |  | |
-     * |_|__|_|   |_|__|_|
-     * previous   current
-     */
-    this.prev = null;
-
-    /**
-     * The next element.
-     *  _______    _______
-     * | |  | |   |*|**|*|
-     * | |  | ---->*|**|*|
-     * |_|__|_|   |_|__|_|
-     * current      next
-     */
     this.next = null;
+    this.prev = null;
   }
 
   /** Returns the next element. `null` otherwise. */
@@ -54,7 +58,7 @@ class ListElement {
   /**
    * Sets the next element.
    * @param next The element to set.
-   * @throws `TypeError` when `next` is not a ListElement
+   * @throws `TypeError` when `next` is not a `ListElement`
    */
   setNext(next: ListElement): void {
     if (!(next instanceof ListElement)) {
@@ -92,5 +96,3 @@ class ListElement {
     return `[ ${this.getValue()} ]`;
   }
 }
-
-export {ListElement, ListElementValue};

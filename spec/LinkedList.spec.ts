@@ -3,7 +3,6 @@ import {LinkedList, ListElement} from '../src/';
 describe('ListElement', () => {
   it('has a value', () => {
     const element = new ListElement('hello');
-
     expect(element.getValue()).toEqual('hello');
   });
 
@@ -32,7 +31,7 @@ describe('ListElement', () => {
     expect(previousElement.getValue()).toEqual('one');
   });
 
-  it("won't connect an invalid next element", () => {
+  it(`doesn't connect an invalid next element`, () => {
     const element1 = new ListElement('one');
 
     try {
@@ -43,7 +42,7 @@ describe('ListElement', () => {
     }
   });
 
-  it("won't connect an invalid previous element", () => {
+  it(`doesn't connect an invalid previous element`, () => {
     const element1 = new ListElement('one');
 
     try {
@@ -54,7 +53,7 @@ describe('ListElement', () => {
     }
   });
 
-  it("won't accept an invalid value", () => {
+  it(`doesn't accept an invalid value`, () => {
     try {
       new (ListElement as any)();
       fail();
@@ -118,7 +117,7 @@ describe('LinkedList', () => {
     expect(list.get(3)).toEqual('three');
   });
 
-  it("won't find a non-existing element", () => {
+  it(`doesn't find a non-existing element`, () => {
     list.add('zero');
     list.add('one');
     list.add('two');
@@ -129,7 +128,7 @@ describe('LinkedList', () => {
     expect(list.contains('error')).toBeNull();
   });
 
-  it("won't go outside the list's bounds", () => {
+  it(`doesn't go outside the list's bounds`, () => {
     try {
       list.get(0);
       fail();
@@ -154,7 +153,7 @@ describe('LinkedList', () => {
     }
   });
 
-  it("gets the list's head and tail", () => {
+  it(`gets the list's head and tail`, () => {
     list.add('zero');
     list.add('one');
     list.add('two');
