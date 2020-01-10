@@ -1,4 +1,4 @@
-## DoubleLinkedList [![Build Status](https://action-badges.now.sh/ffflorian/DoubleLinkedList)](https://github.com/ffflorian/DoubleLinkedList/actions/) [![npm version](https://img.shields.io/npm/v/@ffflorian/doublelinkedlist.svg?style=flat)](https://www.npmjs.com/package/@ffflorian/doublelinkedlist) [![Dependabot Status](https://api.dependabot.com/badges/status?host=github&repo=ffflorian/DoubleLinkedList)](https://dependabot.com)
+## DoubleLinkedList [![Build Status](https://github.com/ffflorian/DoubleLinkedList/workflows/Build/badge.svg)](https://github.com/ffflorian/DoubleLinkedList/actions/) [![npm version](https://img.shields.io/npm/v/@ffflorian/doublelinkedlist.svg?style=flat)](https://www.npmjs.com/package/@ffflorian/doublelinkedlist) [![Dependabot Status](https://api.dependabot.com/badges/status?host=github&repo=ffflorian/DoubleLinkedList)](https://dependabot.com)
 
 A linked list in which every element knows about its predecessor and its successor.
 
