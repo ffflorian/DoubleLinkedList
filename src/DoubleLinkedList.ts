@@ -171,7 +171,7 @@ export class LinkedList {
       throw new TypeError('Invalid argument.');
     }
     let element = this.head;
-    for (let i = 1; i <= index; i++) {
+    for (let index = 1; index <= index; index++) {
       element = element !== null ? element.getNext() : null;
     }
     return element;
@@ -185,13 +185,12 @@ export class LinkedList {
   getFirstElement(value: ListElementValue): ListElement | null {
     let element = this.head;
 
-    for (let i = 0; i <= this.getSize(); i++) {
+    for (let index = 0; index <= this.getSize(); index++) {
       if (element !== null) {
         if (element.getValue() === value) {
           return element;
-        } else {
-          element = element !== null ? element.getNext() : null;
         }
+        element = element !== null ? element.getNext() : null;
       }
     }
 
@@ -230,13 +229,13 @@ export class LinkedList {
       throw new TypeError('Invalid argument.');
     }
 
-    let index = -1;
+    const index = -1;
     let element = this.head;
 
-    for (let i = 0; i <= this.getSize(); i++) {
+    for (let index = 0; index <= this.getSize(); index++) {
       if (element !== null) {
         if (element.getValue() === value) {
-          index = i;
+          index = index;
           break;
         } else {
           element = element.getNext();
