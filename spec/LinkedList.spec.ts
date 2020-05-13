@@ -1,3 +1,5 @@
+/* eslint-disable no-magic-numbers */
+
 import {LinkedList, ListElement} from '../src/';
 
 describe('ListElement', () => {
