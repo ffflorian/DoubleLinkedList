@@ -2,7 +2,7 @@
   "author": "Florian Keller <github@floriankeller.de>",
   "description": "TypeScript implementation of a double-linked list",
   "devDependencies": {
-    "@ffflorian/eslint-config": "0.6.0",
+    "@ffflorian/eslint-config": "0.6.1",
     "@ffflorian/prettier-config": "0.1.0",
     "@ffflorian/semantic-release-config": "0.3.0",
     "@semantic-release/changelog": "5.0.1",
