@@ -1,5 +1,5 @@
 {
-  "author": "Florian Keller <github@floriankeller.de>",
+  "author": "Florian Keller <git@ffflorian.de>",
   "description": "TypeScript implementation of a double-linked list",
   "devDependencies": {
     "@ffflorian/eslint-config": "0.6.1",
