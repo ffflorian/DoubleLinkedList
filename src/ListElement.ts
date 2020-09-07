@@ -1,7 +1,8 @@
 export type ListElementValue = string | number | object | null;
 
 /**
- * A list element. By default the head and the tail are set to `null` since they don't exist yet.
+ * A list element. By default the head and the tail are set to `null` since they
+ * don't exist yet.
  */
 export class ListElement {
   /**
@@ -28,9 +29,7 @@ export class ListElement {
    */
   private prev: ListElement | null;
 
-  /**
-   * @param value The value which the element should contain.
-   */
+  /** @param value The value which the element should contain. */
   constructor(private value: ListElementValue) {
     if (value === null || typeof value === 'undefined') {
       throw new TypeError('Invalid value.');
@@ -82,7 +81,7 @@ export class ListElement {
   /**
    * Sets the value.
    * @param value The value to set.
-   * @throws `TypeError` When `value` is `null` or `undefined`
+   * @throws `TypeError` when `value` is `null` or `undefined`
    */
   setValue(value: ListElementValue): void {
     if (value === null || typeof value === 'undefined') {

@@ -131,11 +131,9 @@ export class LinkedList {
     if (value === null || typeof value === 'undefined') {
       throw new TypeError('Invalid argument.');
     }
+
     const firstElement = this.getFirstElement(value);
-    if (firstElement !== null) {
-      return firstElement.getValue();
-    }
-    return null;
+    return firstElement !== null ? firstElement.getValue() : null;
   }
 
   /**
@@ -155,10 +153,7 @@ export class LinkedList {
     }
 
     const elementAtIndex = this.getElementAtIndex(index);
-    if (elementAtIndex !== null) {
-      return elementAtIndex.getValue();
-    }
-    return null;
+    return elementAtIndex !== null ? elementAtIndex.getValue() : null;
   }
 
   /**
@@ -170,10 +165,13 @@ export class LinkedList {
     if (typeof index !== 'number') {
       throw new TypeError('Invalid argument.');
     }
+
     let element = this.head;
+
     for (let searchIndex = 1; searchIndex <= index; searchIndex++) {
       element = element !== null ? element.getNext() : null;
     }
+
     return element;
   }
 
@@ -199,10 +197,7 @@ export class LinkedList {
 
   /** Returns the current head's value (first element) of the list */
   getHead(): ListElementValue {
-    if (this.head !== null) {
-      return this.head.getValue();
-    }
-    return null;
+    return this.head !== null ? this.head.getValue() : null;
   }
 
   /** Returns the list's size. */
@@ -212,10 +207,7 @@ export class LinkedList {
 
   /** Returns the current tail's value (last element) of the list. */
   getTail(): ListElementValue {
-    if (this.tail !== null) {
-      return this.tail.getValue();
-    }
-    return null;
+    return this.tail !== null ? this.tail.getValue() : null;
   }
 
   /**
@@ -277,18 +269,22 @@ export class LinkedList {
   remove(position: string | number): ListElementValue {
     if (typeof position === 'string') {
       const element = this.getFirstElement(position);
+
       if (element !== null) {
         const value = element.getValue();
         this.removeElement(element);
         return value;
       }
+
       return null;
     } else if (typeof position === 'number') {
       if (position < 0 || position >= this.getSize()) {
         throw new Error(`Index ${position} is out of bounds.`);
       }
+
       const element = this.getElementAtIndex(position);
       const value = element !== null ? element.getValue() : '';
+
       if (element !== null) {
         this.removeElement(element);
       }
