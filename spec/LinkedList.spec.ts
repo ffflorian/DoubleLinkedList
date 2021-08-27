@@ -40,7 +40,7 @@ describe('ListElement', () => {
       element1.setNext('error' as any);
       fail();
     } catch (error) {
-      expect(error.message).toBe('Invalid next element.');
+      expect((error as Error).message).toBe('Invalid next element.');
     }
   });
 
@@ -51,7 +51,7 @@ describe('ListElement', () => {
       element1.setPrev('error' as any);
       fail();
     } catch (error) {
-      expect(error.message).toBe('Invalid previous element.');
+      expect((error as Error).message).toBe('Invalid previous element.');
     }
   });
 
@@ -60,14 +60,14 @@ describe('ListElement', () => {
       new (ListElement as any)();
       fail();
     } catch (error) {
-      expect(error.message).toBe('Invalid value.');
+      expect((error as Error).message).toBe('Invalid value.');
     }
 
     try {
       new ListElement(null);
       fail();
     } catch (error) {
-      expect(error.message).toBe('Invalid value.');
+      expect((error as Error).message).toBe('Invalid value.');
     }
 
     const element1 = new ListElement('');
@@ -76,14 +76,14 @@ describe('ListElement', () => {
       element1.setValue(undefined as any);
       fail();
     } catch (error) {
-      expect(error.message).toBe('Invalid value.');
+      expect((error as Error).message).toBe('Invalid value.');
     }
 
     try {
       element1.setValue(null);
       fail();
     } catch (error) {
-      expect(error.message).toBe('Invalid value.');
+      expect((error as Error).message).toBe('Invalid value.');
     }
   });
 });
@@ -135,7 +135,7 @@ describe('LinkedList', () => {
       list.get(0);
       fail();
     } catch (error) {
-      expect(error.message).toBe('Index 0 is out of bounds.');
+      expect((error as Error).message).toBe('Index 0 is out of bounds.');
     }
 
     list.add('zero');
@@ -144,14 +144,14 @@ describe('LinkedList', () => {
       list.get(2);
       fail();
     } catch (error) {
-      expect(error.message).toBe('Index 2 is out of bounds.');
+      expect((error as Error).message).toBe('Index 2 is out of bounds.');
     }
 
     try {
       list.remove(2);
       fail();
     } catch (error) {
-      expect(error.message).toBe('Index 2 is out of bounds.');
+      expect((error as Error).message).toBe('Index 2 is out of bounds.');
     }
   });
 
