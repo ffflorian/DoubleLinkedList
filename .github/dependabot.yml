@@ -10,7 +10,3 @@ updates:
     assignees:
       - ffflorian
     versioning-strategy: increase
-    ignore:
-      - dependency-name: 'husky'
-        versions:
-          - '>= 5.x'
